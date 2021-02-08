@@ -23,7 +23,8 @@ fields = [dataDict[x] for x in fieldnames]
 
 """
 
-fields = ["hi","this","test","qoeka"]
+#fields = ["hi","this","test","qoeka"]
+
 
 with open(r'liveData.csv', 'a',newline='') as f:
     writer = csv.writer(f)
