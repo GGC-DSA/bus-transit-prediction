@@ -8,7 +8,7 @@ Created on Mon Feb  8 08:55:00 2021
 
 from marta.api import get_buses, get_trains
 import csv 
-
+from datetime import datetime
 
 
  #TODO utilize and test upon api key activation
@@ -20,6 +20,7 @@ fieldNames=['adherence','block_abbr','block_id','direction','last_updated','lati
 
 dataDict = get_buses()
 
+print(datetime.now())
 print(dataDict[0])
 
 
