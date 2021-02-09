@@ -1,8 +1,7 @@
 # Bus Transit Prediction
 
-# Busnet
 
-Created By: 
+**Team Organization**
 
 -Daniel Redder - Team Manager and Data Visualizer
 
