@@ -24,8 +24,17 @@ Python, R, Raspberry Pi, Git
 <details>
   <summary><strong>Data Sets</strong></summary>
   
+  
   **Live Marta Bus Data**
   
+  
+  | Adherence | block_abbr | block_id | direction | last_updated | latitude | longitude | route | stop_id | timepoint | trip_id | vehicle |
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------| -----------| -----------| -----------| -----------| -----------| 
+| 0 |	39-7 |	341 |	Southbound |	2021-02-15 6:33:31 |	33.7837368 |	-84.267377 |	6 |	901155 |	Inman Park Station (North Loop) |	7035213 |	1530|
+
+  
+  
+  This is the data we are live collecting from marta. It includes 
   
   
 </details>
