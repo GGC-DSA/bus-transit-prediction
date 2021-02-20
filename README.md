@@ -20,3 +20,12 @@ Busnet is a dynamic map that shows the route and predicted bus station arrival t
 Python, R, Raspberry Pi, Git
 
 ----
+
+<details>
+  <summary><strong>Data Sets</strong></summary>
+  
+  **Live Marta Bus Data**
+  
+  
+  
+</details>
