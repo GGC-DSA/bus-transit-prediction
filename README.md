@@ -110,7 +110,17 @@ The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862)
 </details>
 
 
+----
 
+<details><summary><strong>Initial Visualizations</strong></summary>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </details>
 
 
 
