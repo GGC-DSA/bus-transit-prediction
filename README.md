@@ -1,9 +1,13 @@
 # Bus Transit Prediction
 
 
-<div class="text-green mb-2 ml-4">
-<h3>Team Organization</h3>
-</div>
+
+<h3>
+ ```diff
+ +Team Organization
+```
+</h3>
+
 
 
 Daniel Redder - Team Manager and Data Visualizer
