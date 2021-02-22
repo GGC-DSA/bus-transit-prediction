@@ -20,7 +20,7 @@ Python, R, Raspberry Pi, Git
 ----
 
 <details>
-  <summary><h2>Data Sets</h2></summary>
+ <summary><strong><big>Data Sets</big></strong></summary>
   
   
   \ <h2>Live Marta Bus Data</h2>
