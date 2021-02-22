@@ -36,5 +36,9 @@ Python, R, Raspberry Pi, Git
   
   The data seen in *figure 1* is a sample of the live data we are collecting from marta. To do this we are using the [bus-transit](https://github.com/itsmarta/marta-python) python library to access marta's restfull api
   
+  ----
   
+  **GTFS Data**
+  
+  [GTFS-Reference-Data)(https://developers.google.com/transit/gtfs/reference#stop_timestxt)
 </details>
