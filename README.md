@@ -76,7 +76,7 @@ Python, R, Raspberry Pi, Git
   
   <h2>GTFS Data</h2>
   
- MARATA DATA GUIDE : [GTFS-Reference-Data)(https://developers.google.com/transit/gtfs/reference#stop_timestxt)
+  GTFS or General Transit Feed Specification is a standard data format used for transportation data. This data provides all the organizational information that links feed data to specific buses, routes, and stops. The documentation for this data include field specification can be found here "[GTFS-Reference-Data](https://developers.google.com/transit/gtfs/reference#stop_timestxt)". 
 
 
 
