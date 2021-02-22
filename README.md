@@ -92,6 +92,9 @@ Python, R, Raspberry Pi, Git
 
 **calendar**:
 
+  | service_id | monday | tuesday | wednesday | thursday | friday | saturday | sunday | start-date | end-date |
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------| -------| ---------| ---------|
+| 2 |	0 |	0 |	0 |	0 |	0 | 0 |	0 | 20201205 | 20210423 |
 
 **calendar_dates**:
 
