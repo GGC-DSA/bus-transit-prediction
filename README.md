@@ -16,7 +16,7 @@ Busnet is a dynamic map that shows the route and predicted bus station arrival t
 
 Python, R, Raspberry Pi, Git
 
-----
+
 
 
 <h2>Data Collection & Exploration</h2>
