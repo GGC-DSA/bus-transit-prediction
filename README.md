@@ -72,7 +72,7 @@ Python, R, Raspberry Pi, Git
   **vehicle** : ?  (not included in gtfs but presumably vehicle id)
   
   </details>
-  <hr>
+
   
   <h2>GTFS Data</h2>
   
@@ -80,7 +80,7 @@ Python, R, Raspberry Pi, Git
 
 
 
-<hr>
+
  
  <h2>Gwinnett County Transit Feeds</h2>
  
