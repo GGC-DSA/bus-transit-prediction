@@ -37,41 +37,41 @@ Python, R, Raspberry Pi, Git
   
   The data seen in *figure 1* is a sample of the live data we are collecting from marta. To do this we are using the [bus-transit](https://github.com/itsmarta/marta-python) python library to access marta's restfull api.
 
-<details><summary>Field Definitions</summary>
+<details><summary><strong>Field Definitions</strong></summary>
   
   
-  Adherence :  ? \#TODO
+  **Adherence** :  ? \#TODO
   
   
-  block_abbr : ? \#TODO
+  **block_abbr** : ? \#TODO
   
   
-  block_id : An id corresponding to the "block" the current trip resides in. A block is a set of trips made with the same vehicle (may or may not be distinct to one day)
+  **block_id** : An id corresponding to the "block" the current trip resides in. A block is a set of trips made with the same vehicle (may or may not be distinct to one day)
   
   
-  direction : Appears to be a String representing the current heading of the bus
+  **direction** : Appears to be a String representing the current heading of the bus
   
-  last_updated : The time data was last reported from the bus
+  **last_updated** : The time data was last reported from the bus
   
-  latitude : a decimal degree between -90.0 and 90.0 representing the latitude of the bus
-  
-  
-  longitude : a decimal degree between -180.0 and 180.0 representing the longitude of the bus
+  **latitude** : a decimal degree between -90.0 and 90.0 representing the latitude of the bus
   
   
-  route : may be related to routeID \#TODO 
+  **longitude** : a decimal degree between -180.0 and 180.0 representing the longitude of the bus
   
   
-  stop_id : Identifies a serviced stop. Unclear if next stop or last stop.
+  **route** : may be related to routeID \#TODO 
   
   
-  timepoint : Identifies if arrival and departure times are adhered to by the vehicle or if they are aproximate  ( 0 approximate, 1 or empty times are exact)
+  **stop_id** : Identifies a serviced stop. Unclear if next stop or last stop.
   
   
-  trip_id : Identifies the current trip (unclear what a trip includes)
+  **timepoint** : Identifies if arrival and departure times are adhered to by the vehicle or if they are aproximate  ( 0 approximate, 1 or empty times are exact)
   
   
-  vehicle : ?  (not included in gtfs but presumably vehicle id)
+  **trip_id** : Identifies the current trip (unclear what a trip includes)
+  
+  
+  **vehicle** : ?  (not included in gtfs but presumably vehicle id)
   
   </details>
   ----
