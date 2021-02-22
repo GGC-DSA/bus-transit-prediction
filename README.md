@@ -10,7 +10,7 @@ Brittany Giordano - Data Modeler and Client Liaison
 Turner Nalley - Data Analyzer and Project Scribe
 
 ---- 
-**Description** 
+<h2>Description</h2> 
 
 Busnet is a dynamic map that shows the route and predicted bus station arrival time of a bus. Busnet aims to make good travel time predictions for both the route and segments of the route using GPS data and a neural network
 
@@ -39,7 +39,7 @@ Python, R, Raspberry Pi, Git
 
 <details><summary><strong>Field Definitions</strong></summary>
   
-  
+  \
   **Adherence** :  ? \#TODO
   
   
