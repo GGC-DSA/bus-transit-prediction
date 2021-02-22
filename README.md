@@ -23,7 +23,7 @@ Python, R, Raspberry Pi, Git
   <summary><strong>Data Sets</strong></summary>
   
   
-  / **Live Marta Bus Data**
+  \ **Live Marta Bus Data**
   
   
   | Adherence | block_abbr | block_id | direction | last_updated | latitude | longitude | route | stop_id | timepoint | trip_id | vehicle |
