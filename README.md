@@ -2,11 +2,9 @@
 
 
 
-<h3>
- ```diff
+```diff
  +Team Organization
 ```
-</h3>
 
 
 
