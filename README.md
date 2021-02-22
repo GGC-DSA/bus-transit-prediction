@@ -21,13 +21,14 @@ Python, R, Raspberry Pi, Git
 
 <h2>Data Collection \& Exploration</h2>
 
+\
 
 <details>
  <summary><strong>Data Sets</strong></summary>
   
   
   <h2>Live Marta Bus Data</h2>
-  
+ 
   
   | Adherence | block_abbr | block_id | direction | last_updated | latitude | longitude | route | stop_id | timepoint | trip_id | vehicle |
 | --- | ----------- | -------- | ------------ | -----------| -----------| -----------| -----------| -----------| -----------| -----------| -----------| 
@@ -113,7 +114,7 @@ The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862)
 
 </details>
 
-
+----
 
 
 <details><summary><strong>Initial Visualizations</strong></summary>
