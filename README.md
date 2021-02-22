@@ -98,6 +98,9 @@ Python, R, Raspberry Pi, Git
 
 **calendar_dates**:
 
+  | service_id | date | exception_type | 
+| --- | ----------- | -------- | 
+| 20 |	20201224 |	1 |	
 
 **routes**:
 
