@@ -18,6 +18,10 @@ Python, R, Raspberry Pi, Git
 
 ----
 
+
+<h2>Data Collection \& Exploration</h2>
+
+
 <details>
  <summary><strong>Data Sets</strong></summary>
   
@@ -110,7 +114,7 @@ The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862)
 </details>
 
 
-----
+
 
 <details><summary><strong>Initial Visualizations</strong></summary>
  
