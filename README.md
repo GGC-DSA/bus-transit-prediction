@@ -19,9 +19,9 @@ Python, R, Raspberry Pi, Git
 ----
 
 
-<h2>Data Collection \& Exploration</h2>
+<h2>Data Collection & Exploration</h2>
 
-\
+
 
 <details>
  <summary><strong>Data Sets</strong></summary>
