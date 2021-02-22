@@ -33,7 +33,7 @@ Python, R, Raspberry Pi, Git
 *figure 1*
   
   
-  The data seen in *figure 1* is a sample of the live data we are collecting from marta. To do this we are using the [bus-transit](https://github.com/itsmarta/marta-python) python library to access marta's restfull api.
+  The data seen in *figure 1* is a sample of the live data we are collecting from marta. To do this we are using the [bus-transit](https://github.com/itsmarta/marta-python) python library to access marta's restfull api. The fields generated from this api vary slightly from the posted GTFS. \#TODO look into this
 
 <details><summary><strong>Field Definitions</strong></summary>
   
