@@ -74,11 +74,21 @@ Python, R, Raspberry Pi, Git
   **vehicle** : ?  (not included in gtfs but presumably vehicle id)
   
   </details>
-  ----
+  <hr>
   
   **GTFS Data**
   
  MARATA DATA GUIDE : [GTFS-Reference-Data)(https://developers.google.com/transit/gtfs/reference#stop_timestxt)
+
+
+
+<hr>
+ 
+ **Gwinnett County Transit Feeds**
+ 
+The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862)
+
+
 
 
 </details>
