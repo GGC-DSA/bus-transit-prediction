@@ -20,10 +20,10 @@ Python, R, Raspberry Pi, Git
 ----
 
 <details>
- <summary><strong><big>Data Sets</big></strong></summary>
+ <summary><strong>Data Sets</strong></summary>
   
   
-  \ <h2>Live Marta Bus Data</h2>
+  <h2>Live Marta Bus Data</h2>
   
   
   | Adherence | block_abbr | block_id | direction | last_updated | latitude | longitude | route | stop_id | timepoint | trip_id | vehicle |
