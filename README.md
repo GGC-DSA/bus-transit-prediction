@@ -83,7 +83,11 @@ Python, R, Raspberry Pi, Git
   GTFS or General Transit Feed Specification is a standard data format used for transportation data. This data provides all the organizational information that links feed data to specific buses, routes, and stops. The documentation for this data including field specifications can be found here "[GTFS-Reference-Data](https://developers.google.com/transit/gtfs/reference#stop_timestxt)". MARTA's 2020 implementation of GTFS can be found [here](https://www.itsmarta.com/app-developer-resources.aspx) in the form of a zip folder with the following files inside. 
 
 
-**Agency**: here
+**Agency**:
+
+  | agency_id | agency_name | agency_url | agency_timezone | agency_lang | agency_phone | agency_email | 
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------|
+| MARTA |	Metropolitan Atlanta Rapid Transit Authority |	http://www.itsmarta.com |	America/New_York |	en |	(404)848-5000 |	custserv@itsmarta.com  |	
 
 
 **calendar**:
