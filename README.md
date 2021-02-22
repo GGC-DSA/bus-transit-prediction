@@ -1,7 +1,7 @@
 # Bus Transit Prediction
 
 
-<h3>Team Organization<h3>
+<h3>Team Organization</h3>
 
 Daniel Redder - Team Manager and Data Visualizer
 
@@ -13,7 +13,7 @@ Turner Nalley - Data Analyzer and Project Scribe
 
 Busnet is a dynamic map that shows the route and predicted bus station arrival time of a bus. Busnet aims to make good travel time predictions for both the route and segments of the route using GPS data and a neural network
  
-<h3>Technologies<h3> 
+<h3>Technologies</h3> 
 
 Python, R, Raspberry Pi, Git
 
