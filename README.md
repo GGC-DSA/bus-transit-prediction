@@ -38,7 +38,7 @@ Python, R, Raspberry Pi, Git
 <details><summary><strong>Field Definitions</strong></summary>
   
   \
-  **Adherence** :  ? \#TODO
+  **Adherence** :  Identifies if arrival and departure times are adhered to by the vehicle or if they are aproximate  ( 0 approximate, 1 or empty times are exact)
   
   
   **block_abbr** : ? \#TODO
@@ -63,7 +63,7 @@ Python, R, Raspberry Pi, Git
   **stop_id** : Identifies a serviced stop. Unclear if next stop or last stop.
   
   
-  **timepoint** : Identifies if arrival and departure times are adhered to by the vehicle or if they are aproximate  ( 0 approximate, 1 or empty times are exact)
+  **timepoint** : Current Street of bus
   
   
   **trip_id** : Identifies the current trip (unclear what a trip includes)
