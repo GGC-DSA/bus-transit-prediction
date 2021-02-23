@@ -104,18 +104,33 @@ Python, R, Raspberry Pi, Git
 
 **routes**:
 
+ | route_id | route_short_name | route_long_name | route_desc | route_type | route_url | route_text_color | 
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------| 
+| 14901 |	2 |	Ponce de Leon Avenue / Druid Hills |	 |	3 |	 | 00FF00 |	
 
 **shapes**:
 
+ | shape_id | shape_pt_lat | shape_pt_lon | shape_pt_sequence | 
+| --- | ----------- | -------- | ------------ | 
+| 117337 | 33.569089999999996 |	-84.40324|	1 |	
 
 **stop_times**:
 
-
+ | trip_id | arrival_time | departure_time | stop_id | stop_sequence |
+ | --------- | -------- | ------------- | ----- | ------- |
+ | 6190019 | 25:20:00 | 25:20:00 | 907960 | 1 |
+ 
 **stops**:
 
+ | stop_id | stop_code | stop_name | stop_lat | stop_lon |
+ | --------- | -------- | ------------- | ----- | ------ |
+ | 900142 | 99330 | CASCADE AVE SW @ ORLANDO ST SW| 33.727827 | -84.443085 |
 
 **trips**:
 
+| route_id | service_id | trip_id | trip_headsign | direction_id | block_id | shape_id |
+| --------- | -------- | ------- | -------------- | --------- | ------- | ------ |
+| 14974 | 3 | 6181301 | AUBURN AVE-PEACHTREE CTR-OLYMPIC PARK | 0 | 1031187 | 87791 |
  
  <h2>Gwinnett County Transit Feeds</h2>
  
