@@ -83,29 +83,54 @@ Python, R, Raspberry Pi, Git
   GTFS or General Transit Feed Specification is a standard data format used for transportation data. This data provides all the organizational information that links feed data to specific buses, routes, and stops. The documentation for this data including field specifications can be found here "[GTFS-Reference-Data](https://developers.google.com/transit/gtfs/reference#stop_timestxt)". MARTA's 2020 implementation of GTFS can be found [here](https://www.itsmarta.com/app-developer-resources.aspx) in the form of a zip folder with the following files inside. 
 
 
-**Agency**:
+**agency**:
+
+  | agency_id | agency_name | agency_url | agency_timezone | agency_lang | agency_phone | agency_email | 
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------|
+| MARTA |	Metropolitan Atlanta Rapid Transit Authority |	http://www.itsmarta.com |	America/New_York |	en |	(404)848-5000 |	custserv@itsmarta.com  |	
 
 
 **calendar**:
 
+  | service_id | monday | tuesday | wednesday | thursday | friday | saturday | sunday | start-date | end-date |
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------| -------| ---------| ---------|
+| 2 |	0 |	0 |	0 |	0 |	0 | 0 |	0 | 20201205 | 20210423 |
 
 **calendar_dates**:
 
+  | service_id | date | exception_type | 
+| --- | ----------- | -------- | 
+| 20 |	20201224 |	1 |	
 
 **routes**:
 
+ | route_id | route_short_name | route_long_name | route_desc | route_type | route_url | route_text_color | 
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------| 
+| 14901 |	2 |	Ponce de Leon Avenue / Druid Hills |	 |	3 |	 | 00FF00 |	
 
 **shapes**:
 
+ | shape_id | shape_pt_lat | shape_pt_lon | shape_pt_sequence | 
+| --- | ----------- | -------- | ------------ | 
+| 117337 | 33.569089999999996 |	-84.40324|	1 |	
 
 **stop_times**:
 
-
+ | trip_id | arrival_time | departure_time | stop_id | stop_sequence |
+ | --------- | -------- | ------------- | ----- | ------- |
+ | 6190019 | 25:20:00 | 25:20:00 | 907960 | 1 |
+ 
 **stops**:
 
+ | stop_id | stop_code | stop_name | stop_lat | stop_lon |
+ | --------- | -------- | ------------- | ----- | ------ |
+ | 900142 | 99330 | CASCADE AVE SW @ ORLANDO ST SW| 33.727827 | -84.443085 |
 
 **trips**:
 
+| route_id | service_id | trip_id | trip_headsign | direction_id | block_id | shape_id |
+| --------- | -------- | ------- | -------------- | --------- | ------- | ------ |
+| 14974 | 3 | 6181301 | AUBURN AVE-PEACHTREE CTR-OLYMPIC PARK | 0 | 1031187 | 87791 |
  
  <h2>Gwinnett County Transit Feeds</h2>
  
