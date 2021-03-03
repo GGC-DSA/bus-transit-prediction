@@ -7,9 +7,9 @@ Created on Mon Feb  8 08:55:00 2021
 """
 
 from marta.api import get_buses, get_trains
-import csv 
+import csv
 from datetime import datetime
-
+import sys
 
  #TODO utilize and test upon api key activation
 
@@ -24,9 +24,9 @@ print(datetime.now())
 print(dataDict[0])
 
 
-with open(r'liveData.csv', 'a',newline='') as f:
+with open(r'{}'.format(sys.argv[1]), 'a',newline='') as f:
     for row in dataDict:
         fields = [getattr(row,x) for x in fieldNames]
         writer = csv.writer(f)
         writer.writerow(fields)
-    
+
