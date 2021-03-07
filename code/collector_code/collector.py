@@ -72,7 +72,7 @@ for i in range(-1,len(dictList)-1,25):
 	else:
 		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i+1:i+26]]
 	
-	for q in formatedpone:
+	#for q in formatedpone:
 		#print(q["PutRequest"]["Item"]["id"]["S"])
 	formdictList={"bus_data":formatedpone}
 	#print(formdictList)
