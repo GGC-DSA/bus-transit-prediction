@@ -57,22 +57,23 @@ with open("ids.txt","a") as file:
 		file.write("\n{},{},{}".format(f'{id:08}',str(now),iteration))
 		dictList.append(new_ids)
 		
-		print(new_ids["id"]["S"])
-
+		print(new_ids["id"]["S"]+"  "+new_ids["timepoint"]["S"])
+		new_ids={}
 #print([{"hi":x} for x in dictList])
 
 
-for i in range(0,len(dictList)-1,25):
+for i in range(-1,len(dictList)-1,25):
+	#print(dictList)
 	
 	#Handling Dictionary Splitting
-	if(len(dictList)<i+25):
+	if(len(dictList)<i+24):
 		print("reached the end")
-		formattedpone=[{"PutRequest":{"Item":x}} for x in dictList[i:]]
+		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i+1:]]
 	else:
-		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i:i+24]]
+		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i+1:i+26]]
 	
-	#for q in formatedpone:
-		#print(q["PutRequest"]["Item"]["id"]["S"])
+	for q in formatedpone:
+		print(q["PutRequest"]["Item"]["id"]["S"])
 	formdictList={"bus_data":formatedpone}
 	#print(formdictList)
 	with open("data/jsonout{}.json".format(i),"w+") as fp:
