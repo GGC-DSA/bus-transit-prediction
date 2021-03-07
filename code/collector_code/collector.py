@@ -15,7 +15,7 @@ from os import path
 from collections import defaultdict
 import json
 
- #TODO utilize and test upon api key activation
+ #Field names and datatype specifications
 fieldNames=[('adherence',"N"),('block_abbr',"S"),('block_id',"S"),('direction',"S"),('last_updated',"S"),('latitude',"N"),('longitude',"N"),('route',"S"),('stop_id',"S")
 	,('timepoint',"S"),('trip_id',"S"),('vehicle',"S")]
 now = datetime.now()
@@ -28,6 +28,7 @@ dataDict = get_buses()
 id=0
 iteration=0
 
+#checking whether id file exists, if it does read in the next available id
 if(not path.exists("ids.txt")):
 	with open("ids.txt","w+") as file:
 		file.write("id,{},iteration".format(str(datetime.now())))
@@ -44,6 +45,8 @@ else:
 new_ids = {}
 dictList=[]
 
+
+#Reformatting Data into a list of dictionaries with ids & appending the new ids to the id text file
 with open("ids.txt","a") as file:
 	for row in dataDict:
 		id=id+1
@@ -53,9 +56,11 @@ with open("ids.txt","a") as file:
 			new_ids[y]={"{}".format(z):str(x)}
 		file.write("\n{},{},{}".format(f'{id:08}',str(now),iteration))
 		dictList.append(new_ids)
-		#print("new_ids)
+		
+		print(new_ids["id"]["S"])
 
 #print([{"hi":x} for x in dictList])
+
 
 for i in range(0,len(dictList)-1,25):
 	
@@ -64,8 +69,10 @@ for i in range(0,len(dictList)-1,25):
 		print("reached the end")
 		formattedpone=[{"PutRequest":{"Item":x}} for x in dictList[i:]]
 	else:
-		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i:i+25]]
+		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i:i+24]]
 	
+	#for q in formatedpone:
+		#print(q["PutRequest"]["Item"]["id"]["S"])
 	formdictList={"bus_data":formatedpone}
 	#print(formdictList)
 	with open("data/jsonout{}.json".format(i),"w+") as fp:
