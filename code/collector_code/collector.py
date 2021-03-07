@@ -53,11 +53,11 @@ with open("ids.txt","a") as file:
 		new_ids["id"]={"S":f'{id:08}'}
 		new_ids["iteration"]={"S":str(iteration)}
 		for x,y,z in [(getattr(row,x[0]),x[0],x[1]) for x in fieldNames]:
-			new_ids[y]={"{}".format(z):str(x)}
+			new_ids[y]={"S":str(x)}
 		file.write("\n{},{},{}".format(f'{id:08}',str(now),iteration))
 		dictList.append(new_ids)
 		
-		print(new_ids["id"]["S"]+"  "+new_ids["timepoint"]["S"])
+		#print(new_ids["id"]["S"]+"  "+new_ids["timepoint"]["S"])
 		new_ids={}
 #print([{"hi":x} for x in dictList])
 
@@ -67,13 +67,13 @@ for i in range(-1,len(dictList)-1,25):
 	
 	#Handling Dictionary Splitting
 	if(len(dictList)<i+24):
-		print("reached the end")
+		#print("reached the end")
 		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i+1:]]
 	else:
 		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i+1:i+26]]
 	
 	for q in formatedpone:
-		print(q["PutRequest"]["Item"]["id"]["S"])
+		#print(q["PutRequest"]["Item"]["id"]["S"])
 	formdictList={"bus_data":formatedpone}
 	#print(formdictList)
 	with open("data/jsonout{}.json".format(i),"w+") as fp:
