@@ -41,20 +41,21 @@ else:
 		iteration=int(last_data[-1])+1
 
 
-mydict = lambda: defaultdict(mydict)
-new_ids = mydict()
-
+new_ids = {}
+dictList=[]
 
 with open("ids.txt","a") as file:
 	for row in dataDict:
 		id=id+1
-		new_ids[id]["iteration"]=iteration
+		new_ids["id"]=f'{id:08}'
+		new_ids["iteration"]=iteration
 		for x,y in [(getattr(row,x),x) for x in fieldNames]:
-			new_ids[id][y]=x
-		file.write("\n{},{},{}".format(id,str(now),iteration))
-
+			new_ids[y]=x
+		file.write("\n{},{},{}".format(f'{id:08}',str(now),iteration))
+		dictList.append(new_ids)
+		print(new_ids)
 with open("jsonout.json","w+") as fp:
-	json.dump(new_ids, fp, default=str)
+	json.dump(dictList, fp, default=str)
 
 
 #print(new_ids)
