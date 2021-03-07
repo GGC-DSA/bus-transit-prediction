@@ -16,14 +16,14 @@ from collections import defaultdict
 import json
 
  #TODO utilize and test upon api key activation
-fieldNames=['adherence','block_abbr','block_id','direction','last_updated','latitude','longitude','route','stop_id'
-	,'timepoint','trip_id','vehicle']
+fieldNames=[('adherence',"N"),('block_abbr',"S"),('block_id',"S"),('direction',"S"),('last_updated',"S"),('latitude',"N"),('longitude',"N"),('route',"S"),('stop_id',"S")
+	,('timepoint',"S"),('trip_id',"S"),('vehicle',"S")]
 now = datetime.now()
 
 dataDict = get_buses()
 
-print(datetime.now())
-print(dataDict[0])
+#print(datetime.now())
+#print(dataDict[0])
 
 id=0
 iteration=0
@@ -47,16 +47,29 @@ dictList=[]
 with open("ids.txt","a") as file:
 	for row in dataDict:
 		id=id+1
-		new_ids["id"]=f'{id:08}'
-		new_ids["iteration"]=iteration
-		for x,y in [(getattr(row,x),x) for x in fieldNames]:
-			new_ids[y]=x
+		new_ids["id"]={"S":f'{id:08}'}
+		new_ids["iteration"]={"S":str(iteration)}
+		for x,y,z in [(getattr(row,x[0]),x[0],x[1]) for x in fieldNames]:
+			new_ids[y]={"{}".format(z):str(x)}
 		file.write("\n{},{},{}".format(f'{id:08}',str(now),iteration))
 		dictList.append(new_ids)
-		print(new_ids)
-with open("jsonout.json","w+") as fp:
-	json.dump(dictList, fp, default=str)
+		#print("new_ids)
 
+#print([{"hi":x} for x in dictList])
+
+for i in range(0,len(dictList)-1,25):
+	
+	#Handling Dictionary Splitting
+	if(len(dictList)<i+25):
+		print("reached the end")
+		formattedpone=[{"PutRequest":{"Item":x}} for x in dictList[i:]]
+	else:
+		formatedpone=[{"PutRequest":{"Item":x}} for x in dictList[i:i+25]]
+	
+	formdictList={"bus_data":formatedpone}
+	#print(formdictList)
+	with open("data/jsonout{}.json".format(i),"w+") as fp:
+		json.dump(formdictList, fp, default=str)
 
 #print(new_ids)
 
