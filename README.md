@@ -89,6 +89,16 @@ Python, R, Raspberry Pi, Git
 | --- | ----------- | -------- | ------------ | -----------| -----------| -----------|
 | MARTA |	Metropolitan Atlanta Rapid Transit Authority |	http://www.itsmarta.com |	America/New_York |	en |	(404)848-5000 |	custserv@itsmarta.com  |	
 
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **Adherence** :  Identifies if arrival and departure times are adhered to by the vehicle or if they are aproximate  ( 0 approximate, 1 or empty times are exact)
+  
+  
+ 
+  
+  </details>
+
 
 **calendar**:
 
