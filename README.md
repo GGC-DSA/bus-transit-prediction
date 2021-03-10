@@ -134,7 +134,7 @@ Python, R, Raspberry Pi, Git
  
  <h2>Gwinnett County Transit Feeds</h2>
  
-The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862)
+The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862) contains historical GTFS data for Gwinnett County Transit system. This data includes information containing stops, stop times, and timetables. This data is a branch of GTFS data, and similarly the information including field specifications can be found here [GTFS-Reference-Data](https://developers.google.com/transit/gtfs/reference#stop_timestxt).
 
 
 </details>
