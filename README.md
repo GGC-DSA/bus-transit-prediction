@@ -336,7 +336,7 @@ The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862) co
  
  </details>
 
-<h1>Statistical Analysis and In Depth Visualizations</h2>
+<h2>Statistical Analysis and In Depth Visualizations</h2>
 
 (notebook link here)
 
