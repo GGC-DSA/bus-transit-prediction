@@ -1,6 +1,7 @@
 # Bus Transit Prediction
+Team: BusNet
 
-<h3>Team Organization</h3>
+<h3>Team Structure</h3>
 
 Daniel Redder - Team Manager and Data Visualizer
 
