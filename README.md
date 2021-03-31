@@ -14,9 +14,9 @@ Busnet is a dynamic map that shows the route and predicted bus station arrival t
  
 <h3>Technologies</h3> 
 
-Python, R, Raspberry Pi, Git
+Python, R, ~~Raspberry Pi~~, Git, AWS, Flask, Colab, Jupyter Notebooks, Tableau
 
-----
+
 
 
 <h2>Data Collection & Exploration</h2>
@@ -42,16 +42,16 @@ Python, R, Raspberry Pi, Git
 <details><summary><strong>Field Definitions</strong></summary>
   
   \
-  **Adherence** :  Identifies if arrival and departure times are adhered to by the vehicle or if they are aproximate  ( 0 approximate, 1 or empty times are exact)
+  **Adherence** :  The time either early (+) or late (-) a bus is to meeting its specificed arrival time at a stop
   
   
-  **block_abbr** : ? \#TODO
+  **block_abbr** :  --unclear doesn't seem to match GTFS data--
   
   
   **block_id** : An id corresponding to the "block" the current trip resides in. A block is a set of trips made with the same vehicle (may or may not be distinct to one day)
   
   
-  **direction** : Appears to be a String representing the current heading of the bus
+  **direction** : Appears to be a String representing the current heading of the bus (cardinal Direction)
   
   **last_updated** : The time data was last reported from the bus
   
@@ -61,19 +61,19 @@ Python, R, Raspberry Pi, Git
   **longitude** : a decimal degree between -180.0 and 180.0 representing the longitude of the bus
   
   
-  **route** : may be related to routeID \#TODO 
+  **route** : The routeID the bus is currently servicing
   
   
-  **stop_id** : Identifies a serviced stop. Unclear if next stop or last stop.
+  **stop_id** : Identifies the current next stop destination for the bus
   
   
   **timepoint** : Current Street of bus
   
   
-  **trip_id** : Identifies the current trip (unclear what a trip includes)
+  **trip_id** : Identifies the current trip --doesn't seem to match with GTFS trip data--
   
   
-  **vehicle** : ?  (not included in gtfs but presumably vehicle id)
+  **vehicle** : The unique ID identifying a specific bus
   
   </details>
 
