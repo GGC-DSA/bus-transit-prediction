@@ -8,16 +8,29 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
 
+
+
+
+
 <link rel = "stylesheet" type="text/css" href = "{{url_for('static',filename='style.css')}}">
- 
- 
+
+<!-- dropdown utils-->
+<script src="{{url_for('static',filename='drop.js')}}"></script>
+
+<link rel = "stylesheet" type="text/css" href = "{{url_for('static',filename='dropDown.css')}}">
+
+
+<!-- BusMap heigh styling --> 
  <style>
  #busMap{
- height:400px;
+ height:700px;
  }
  </style>
 
 </head>
+
+<!-- main webpage section -->
+
 <body>
 
 <div class="header">
@@ -26,9 +39,9 @@
 </div>
 
 <div class="topnav">
-  <a href="#">Code</a>
-  <a href="#">About Us</a>
-  <a href="#">Data</a>
+  <a href="/Code">Code</a>
+  <a href="/AboutUs">About Us</a>
+  <a href="/Data">Data</a>
  <!-- <a href="#" style="float:right">Link</a>  -->
 </div>
 
@@ -37,21 +50,61 @@
   <div class="leftcolumn">
     <div class="card">
       <h2>Map</h2>
-      <h5>Data last updated on ----</h5>
-      
-      
+
+      Data last updated At: <b>{{update_time}}</b>
+      <br>There are currently <b>{{home_annoc[0]}}</b> buses running across <b>{{home_annoc[1]}}</b> routes
+      <br>
+       
       
             
       <div id="busMap"></div>
       
       <script>
-           const myMap = L.map('busMap').setView([0,0],1);
            
+           //var encode_key = {{encode_key|safe}}
+           
+            //south,north,east,west
+          /* #TODO  fix issues with custom icon defining and utilize custom directional icons.
+           south = L.icon({
+           iconUrl:"{{url_for('static',filename='/images/marta_logo_n_res.png')}}",
+           shadowUrl:"{{url_for('static',filename='/images/marta_logo_gen_res.png')}}",
+           iconSize:[146,27],
+           shadowSize:[146,27],
+           iconAnchor:[60,15],
+           shadowAnchor:[60,15],
+           popupAnchor:[0,10]
+           })
+           */
+      
+           //sets location (lon lat zoom) for initial map position
+           const myMap = L.map('busMap').setView([33.7490,-84.3880],11);
+           
+           var value = {{value|safe}}
+           
+           //console.log(value.get(0));
+           
+           //required attribution for tiler
            const attribution = 
                  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+           
+           //tile utility api link
            const tile_url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+           
+           //collect tiles
            const tiles = L.tileLayer(tile_url,{attribution})
+           
+           //build map
            tiles.addTo(myMap);
+           
+           //add markers
+           
+           for(var i=0;i<value.length;i++){
+                 //console.log(value.get(i));
+                 //{Icon:south}
+                 marker = L.marker([value[i][1],value[i][0]]);
+                 marker.bindPopup("<b>Vehicle</b> <br> ID: "+value[i][2]);
+                 marker.addTo(myMap);
+           }
       </script>
       
       <!--<script src="{{url_for('static',filename='mapper.js')}}"></script>-->
@@ -66,7 +119,22 @@
   <div class="rightcolumn">
     <div class="card">
       <h2>Route Selection</h2>
-      <div class="fakeimg" style="height:100px;">Image</div>
+      <div class="fakeimg" style="height:100px;">
+      <div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Select a Route</button>
+  <div id="myDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+          <a href="#about">About</a>
+          <a href="#base">Base</a>
+          <a href="#blog">Blog</a>
+          <a href="#contact">Contact</a>
+          <a href="#custom">Custom</a>
+          <a href="#support">Support</a>
+          <a href="#tools">Tools</a>
+        </div>
+      </div>
+      
+      </div>
       <p>list of buttons here for selecting routes</p>
     </div>
     <div class="card">

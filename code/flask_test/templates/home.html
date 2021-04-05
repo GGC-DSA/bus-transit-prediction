@@ -1,0 +1,46 @@
+<head>
+
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+<link rel = "stylesheet" type="text/css" href = "{{url_for('static',filename='style.css')}}">
+ 
+
+</head>
+<body>
+
+
+
+<style>
+#busMap{
+height:300px;
+}
+</style>
+
+
+<div id="busMap"></div>
+
+<script>
+           const myMap = L.map('busMap').setView([33.7490,-84.3880],11);
+           
+           const attribution = 
+                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+           const tile_url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+           const tiles = L.tileLayer(tile_url,{attribution})
+           myMap.addLayer(tiles);
+</script>
+      
+            
+
+
+
+
+
+
+</body>
+
