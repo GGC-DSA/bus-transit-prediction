@@ -59,6 +59,10 @@
             
       <div id="busMap"></div>
       
+      
+      
+      
+      
       <script>
            
            //var encode_key = {{encode_key|safe}}
@@ -66,8 +70,8 @@
             //south,north,east,west
           /* #TODO  fix issues with custom icon defining and utilize custom directional icons.
            south = L.icon({
-           iconUrl:"{{url_for('static',filename='/images/marta_logo_n_res.png')}}",
-           shadowUrl:"{{url_for('static',filename='/images/marta_logo_gen_res.png')}}",
+           iconUrl:"{{url_for('static',filename='images/marta_logo_n_res.png')}}",
+           shadowUrl:"{{url_for('static',filename='images/marta_logo_gen_res.png')}}",
            iconSize:[146,27],
            shadowSize:[146,27],
            iconAnchor:[60,15],
@@ -80,6 +84,7 @@
            const myMap = L.map('busMap').setView([33.7490,-84.3880],11);
            
            var value = {{value|safe}}
+           var stops = {{stops|safe}}
            
            //console.log(value.get(0));
            
@@ -98,13 +103,106 @@
            
            //add markers
            
-           for(var i=0;i<value.length;i++){
-                 //console.log(value.get(i));
-                 //{Icon:south}
-                 marker = L.marker([value[i][1],value[i][0]]);
-                 marker.bindPopup("<b>Vehicle</b> <br> ID: "+value[i][2]);
-                 marker.addTo(myMap);
+           var busIcon = L.icon({
+           iconUrl: "{{url_for('static',filename='images/bus.png')}}",
+           iconSize: [48,48],
+           iconAnchor: [24,48],
+           popupAnchor:[0,-28]});
+           
+           
+           var stopIcon = L.icon({
+           iconUrl: "{{url_for('static',filename='images/bus-stop.png')}}",
+           iconSize: [32,32],
+           iconAnchor: [16,32],
+           popupAnchor:[0,-16]});
+           
+           //layer declaration
+           
+           var mainLayer = L.layerGroup();
+           
+           var dynamicLayer = L.layerGroup();
+           
+           
+           //method declarations
+           
+           
+           var stopBuild = function(routeID){
+           
+           //builds stop markers
+                 for(var i=0;i<stops.length;i++){
+                 
+                       if(stops[i][3]==routeID){
+                       
+                            marker = L.marker([stops[i][1],stops[i][0]],{icon:stopIcon});
+                            marker.bindPopup("<b>Stop <br> ID:</b> "+stops[i][2]+"<br> <b>Route:</b> "+stops[i][3]);
+                            dynamicLayer.addLayer(marker); 
+
+                       }
+                 
+                 
+                 }
            }
+           
+           
+           
+           
+           
+           
+           var mainMapBuilder = function(){
+                 for(var i=0;i<value.length;i++){
+                       //console.log(value.get(i));
+                       //{Icon:south}
+                       marker = L.marker([value[i][1],value[i][0]],{icon:busIcon});
+                       marker.bindPopup("<b>Vehicle <br> ID:</b> "+value[i][2]+"<br> <b>Route:</b> "+value[i][4]
+                             +"<br> <b> Direction:</b> "+value[i][3] );
+                       mainLayer.addLayer(marker);
+           }
+           }
+           
+           
+           var mapClear = function(layer){
+                 layer.clearLayers();
+           }
+           
+           
+           
+           
+           
+           
+           var buildRoute = function(routeID){
+           
+               //builds bus markers
+                 for(var i=0;i<value.length;i++){
+                 
+                       if(value[i][4]==routeID){
+                             
+                             marker = L.marker([value[i][1],value[i][0]],{icon:busIcon});
+                             marker.bindPopup("<b>Vehicle <br> ID:</b> "+value[i][2]+"<br> <b>Route:</b> "+value[i][4]
+                                   +"<br> <b> Direction:</b> "+value[i][3] );
+                             dynamicLayer.addLayer(marker);
+                 
+                 
+                       }
+                 }
+                 stopBuild(routeID);
+                 
+           }
+           
+           
+           
+           
+           
+           
+           //start main map view
+           //mainMapBuilder()
+          // mainLayer.addTo(myMap)
+          
+          buildRoute(4);
+          dynamicLayer.addTo(myMap)
+           
+           
+           
+           
       </script>
       
       <!--<script src="{{url_for('static',filename='mapper.js')}}"></script>-->
@@ -150,6 +248,7 @@
 
 <div class="footer">
   <h2>SST, GGC Logos?</h2>
+  <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
   <!--<div class="fakeimg">-->
      <!--   <image src="{{url_for('static',filename='images/ggc_ad.png')}}"> -->
  <!-- </div>-->

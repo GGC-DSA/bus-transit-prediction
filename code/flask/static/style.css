@@ -10,13 +10,22 @@ body {
 
 /* Header/Blog Title */
 .header {
-  padding: 30px;
-  text-align: center;
-  background: #FDBE43;
+  display:flex;
+  background:#FDBE43;
 }
 
 .header h1 {
-  font-size: 50px;
+  font-size:50px;
+}
+.columnH{
+ flex-grow:2;
+ text-align:center;
+}
+.outColumn{
+ flex-grow:.5;
+ justify-content:center;
+ display:flex;
+ align-items:center;
 }
 
 /* Style the top navigation bar */

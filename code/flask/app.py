@@ -31,30 +31,46 @@ app = Flask(__name__, template_folder='templates')
 app.secret_key = 'asdgagaweawsfasdfaqw'
 
 
-#provider list for markers (long,lat,vehicleID, more param to be added for popups and sorting)
 
 
 
-#Data Gathered here-------------
-lister=[[-84.362307,33.82584490,"1710","Northbound"],[-84.5896475,33.5589891,"1841","Eastbound"]]
+
+# Map Data Gathered here-------------  
+
+# Bus Data: lat lon, vehicle id, dir, route
+lister=[[-84.362307,33.82584490,"1710","Northbound",4],[-84.5896475,33.5589891,"1841","Eastbound",6]]
 update_time="04/04/2021 7:56 P.m."
+
+#Stop Data : lat, long, stopID, routeID
+stops = [[-84.5896475,36.5589891,1456,5],[-84.5896475,30.5589891,155424,4],[-84.5896475,32.5589891,123432,4],[-84.5896475,34.5589891,12341,4]]
+
+#prediction Data: TODO
 
 
 
 #data prepro here --------
 
+
+
+
+#unused labeling
+#----------------------------------------------------------------------------------- 
 #directionality encoder defined
-dirList=["Southbound","Northbound","Eastbound","Westbound"]
-encoder = prepro.LabelEncoder()
-encoder.fit(dirList)
+#dirList=["Southbound","Northbound","Eastbound","Westbound"]
+#encoder = prepro.LabelEncoder()
+#encoder.fit(dirList)
 
 #to ensure proper image displaying (encoder doesn't seem to have consistent starting position)
-key = encoder.transform([x for x in dirList])
+#key = encoder.transform([x for x in dirList])
 
 
-for i in range(0,len(lister)):
-      lister[i][3]=encoder.transform([lister[i][3]])[0]
-print(lister)
+#for i in range(0,len(lister)):
+ #     lister[i][3]=encoder.transform([lister[i][3]])[0]
+#print(lister)
+#----------------------------------------------------------------------------------
+
+
+
 
 #sent data defined starting here-------
 
@@ -64,10 +80,11 @@ home_annoc = [str(len(lister)),str(2)]
 
 #home page --initial template adapted from w3schools css tutorial
 @app.route('/')
+@app.route('/Home')
 @app.route('/home')
 def home_builder():
       return render_template("home.html",value =lister,update_time=update_time,
-                             home_annoc=home_annoc, encode_key = key)
+                             home_annoc=home_annoc,stops=stops)
 
 
 @app.route('/Data')
@@ -86,4 +103,4 @@ def code_builder():
 
 
 
-app.run(debug=True)
+app.run(debug=False)
