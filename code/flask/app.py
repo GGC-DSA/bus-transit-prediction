@@ -46,6 +46,7 @@ stops = [[-84.5896475,36.5589891,1456,5],[-84.5896475,30.5589891,155424,4],[-84.
 
 #prediction Data: TODO
 
+routeList = [4,6,5]
 
 
 #data prepro here --------
@@ -84,12 +85,25 @@ home_annoc = [str(len(lister)),str(2)]
 @app.route('/home')
 def home_builder():
       return render_template("home.html",value =lister,update_time=update_time,
-                             home_annoc=home_annoc,stops=stops)
+                             home_annoc=home_annoc,stops=stops,routeList=routeList)
 
 
 @app.route('/Data')
 def data_builder():
-      return render_template("data.html")
+      
+      #TODO Turner -------
+      #grab the arima model
+      
+      #calculate adherence for every hour for Today
+      
+      #model.predict(timeStamp....) 
+      
+      #return as variable
+      
+      
+      values = []
+      
+      return render_template("data.html",values=values)
 
 
 @app.route('/AboutUs')

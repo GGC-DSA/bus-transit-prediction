@@ -34,8 +34,17 @@
 <body>
 
 <div class="header">
-  <h1>MARTA Bus Transit Prediction Project</h1>
-  <p>Made by Team BusNet</p>
+   <div class = "outColumn">
+       <image src="{{url_for('static',filename='images/ggc_logo.png')}}">
+   </div>
+    <div class = "columnH">
+        <h1>MARTA Bus Transit Prediction Project</h1>
+        <h2><b>Made by Team BusNet</b></h2>
+    </div>
+    <div class = "outColumn">
+          <image src="{{url_for('static',filename='images/busNet.png')}}">
+    </div>
+
 </div>
 
 <div class="topnav">
@@ -66,6 +75,9 @@
       <script>
            
            //var encode_key = {{encode_key|safe}}
+           
+           //var routeList = {{routeList|safe}};
+           
            
             //south,north,east,west
           /* #TODO  fix issues with custom icon defining and utilize custom directional icons.
@@ -148,18 +160,10 @@
            
            
            
-           var mainMapBuilder = function(){
-                 for(var i=0;i<value.length;i++){
-                       //console.log(value.get(i));
-                       //{Icon:south}
-                       marker = L.marker([value[i][1],value[i][0]],{icon:busIcon});
-                       marker.bindPopup("<b>Vehicle <br> ID:</b> "+value[i][2]+"<br> <b>Route:</b> "+value[i][4]
-                             +"<br> <b> Direction:</b> "+value[i][3] );
-                       mainLayer.addLayer(marker);
-           }
-           }
            
            
+           
+           //erases content of layer (also essentially lowers "level" of layer)
            var mapClear = function(layer){
                  layer.clearLayers();
            }
@@ -167,39 +171,74 @@
            
            
            
-           
+           //TODO Copy button functionality from buildMain...
            
            var buildRoute = function(routeID){
-           
+                mapClear(dynamicLayer);
                //builds bus markers
                  for(var i=0;i<value.length;i++){
-                 
+                       
+                       
                        if(value[i][4]==routeID){
                              
                              marker = L.marker([value[i][1],value[i][0]],{icon:busIcon});
                              marker.bindPopup("<b>Vehicle <br> ID:</b> "+value[i][2]+"<br> <b>Route:</b> "+value[i][4]
-                                   +"<br> <b> Direction:</b> "+value[i][3] );
+                                   +"<br> <b> Direction:</b> "+value[i][3]);
                              dynamicLayer.addLayer(marker);
-                 
+                             
+                             
                  
                        }
                  }
                  stopBuild(routeID);
+                 mapClear(mainLayer);
+                 dynamicLayer.addTo(myMap);
+                 
                  
            }
            
            
+           //TODO add vehicle from route selection option
            
+           var buildVehicle = function(vehicleAr){
+                 mapClear(dynamicLayer);
+               
+                 marker = L.marker([vehicleAr[1],vehicleAr[0]],{icon:busIcon});
+                 marker.bindPopup("<b>Vehicle <br> ID:</b> "+vehicleAr[2]+"<br> <b>Route:</b> "+value[4]
+                       +"<br> <b> Direction:</b> "+value[3] );
+                 dynamicLayer.addLayer(marker);
+           
+                 stopBuild(vehicleAr[4]);
+                 mapClear(mainLayer);
+                 dynamicLayer.addTo(myMap);
+           }
+           
+           
+           //WORKS !! :)  
+           
+           var mainMapBuilder = function(){
+                 mapClear(dynamicLayer);
+                 for(var i=0;i<value.length;i++){
+                       //console.log(value.get(i));
+                       //{Icon:south}
+                       marker = L.marker([value[i][1],value[i][0]],{icon:busIcon});
+                       marker.bindPopup("<b>Vehicle <br> ID:</b> "+value[i][2]+"<br> <b>Route:</b> "+value[i][4]
+                             +"<br> <b> Direction:</b> <br> "+value[i][3]+"<br> <button"+' onclick="buildRoute('+value[i][4]+')">'
+                             +"Select Route</button>");
+                       mainLayer.addLayer(marker);
+                       
+                  // onclick=\"buildRoute("+value[i][4]+")\"
+           }
+                 mainLayer.addTo(myMap);
+           }
            
            
            
            //start main map view
-           //mainMapBuilder()
-          // mainLayer.addTo(myMap)
+          mainMapBuilder()
+          // deprecated....mainLayer.addTo(myMap)
           
-          buildRoute(4);
-          dynamicLayer.addTo(myMap)
-           
+          
            
            
            
@@ -222,13 +261,33 @@
   <button onclick="myFunction()" class="dropbtn">Select a Route</button>
   <div id="myDropdown" class="dropdown-content">
     <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+         
+         
+         <!--   (button list for route column non functional)
+         <script>
+         //not working currently (need different drop down option not neccesary however.)
+         var routeList = {{routeList|safe}};
+         
+         var frag = document.createDocumentFragment();
+         
+         for(var irr=0;irr<routeList.length;irr++){ 
+               var elem = document.createElement('input');
+               elem.type = 'button';
+               elem.value = 'button';
+               elem.onclick = buildRoute(routeList[irr]);
+               frag.appendChild(elem);
+         }
+         document.body.appendChild(frag);
+         </script>
+         -->
+         <!--
           <a href="#about">About</a>
           <a href="#base">Base</a>
           <a href="#blog">Blog</a>
           <a href="#contact">Contact</a>
           <a href="#custom">Custom</a>
           <a href="#support">Support</a>
-          <a href="#tools">Tools</a>
+          <a href="#tools">Tools</a>   -->
         </div>
       </div>
       
