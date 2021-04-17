@@ -217,9 +217,11 @@
             //TODO Copy button functionality from buildMain...
            
            var buildRoute = function(routeID){
+                routeID = parseInt(routeID);
+               // alert("hi : "+routeID)
                 mapClear(dynamicLayer);
                //builds bus markers
-                 Ihold = 0
+                 Ihold = 666
                  for(var i=0;i<value.length;i++){
                        
                        
@@ -236,7 +238,14 @@
                  
                        }
                  }
-                 stopBuild(Ihold,false);
+                 if(Ihold != 666){
+                     stopBuild(Ihold,false);
+                 }
+                 else{
+                     alert("Warning! The route you selected : "+routeID+ " Does not have any buses servicing it when we last collected data."
+                     +" <br> <b>Click on the Return Button to Return to The Main Map. ");
+                 }
+                 
                  mapClear(mainLayer);
                  dynamicLayer.addTo(myMap);
                  
@@ -247,9 +256,9 @@
            
            
            
-           //WORKS !! :)  
+           //WORKS !! :) Old Code here 
            
-           var mainMapBuilder = function(){
+           var mainMapBuilderOld= function(){
                  mapClear(mainLayer);
                  mapClear(dynamicLayer);
                  for(var i=0;i<value.length;i++){
@@ -261,7 +270,7 @@
                              +"Select Route</button>");
                        mainLayer.addLayer(marker);
                        
-                  // onclick=\"buildRoute("+value[i][4]+")\"
+                
            }
                  mainLayer.addTo(myMap);
            }
@@ -269,23 +278,51 @@
            
            
            //start main map view
-          mainMapBuilder()
+          //mainMapBuilder()
           // deprecated....mainLayer.addTo(myMap)
           
-          /*
-          var revampMapBuilder = function(){
+          
+          var mainMapBuilder = function(){
           
                 mapClear(mainLayer);
                 mapClear(dynamicLayer);
-                for(var j=0;j<stops)
-          
-          
-          
-          
+                
+    
+                dupeList = {};
+                
+                for(var j=0;j<stops.length;j++){
+                    stop = stops[j];
+                    routeStr = String(stop[3]);
+                   // alert(routeStr);
+                    if(routeStr in Object.keys(dupeList)){
+                        
+                        lister = dupeList[routeStr];
+                        dupeList[routeStr] = [lister[0]+1,[(lister[1][0]*lister[0]/(lister[0]+1))+stop[0]/(lister[0]+1),
+                            (lister[1][1]*lister[0])/(lister[0]+1)+(stop[1]/(lister[0]+1))]];
+                    }
+                    else{
+                        dupeList[routeStr] = [1,[ stop[0],stop[1] ]];
+                    }
+                    
+                    
+                }
+                
+                //alert(Object.keys(dupeList));
+                Object.keys(dupeList).forEach(key => {
+  
+                    marker = L.marker([dupeList[key][1][1]-2,dupeList[key][1][0]],{icon:routeIcon});
+                    
+                     marker.bindPopup("<b>Route</b> <br> <b>RouteID:</b> "+key
+                             +"<br> <button onclick=buildRoute("+key+")>"
+                             +"Select Route</button>");
+                     mainLayer.addLayer(marker);
+  
+                });
+                mainLayer.addTo(myMap);
           }
-           */
            
-           
+      mainMapBuilder();
+          
       </script>
       
       <!--<script src="{{url_for('static',filename='mapper.js')}}"></script>-->
@@ -302,9 +339,9 @@
     <div class="card">
       <h1>How To Use</h1>
       <h3>Step 1: Select a Route</h3>
-     <p>click on a bus to select a specific route to look at <image src="{{url_for('static',filename='images/bus.png')}}"></p>
+     <p>click on the map icon to select a specific route to look at <image src="{{url_for('static',filename='images/map.png')}}"></p>
      <h3>Step 2: Select a Vehicle</h3>
-     <p> click on a bus to choose the specific vehicle to look at the predicted values for </p>
+     <p> click on a bus to choose the specific vehicle to look at the predicted values for </p> <image src="{{url_for('static',filename='images/bus.png')}}">
      <h3>Step 3: Look at the predicted adherence</h3>
      <p> adherence represents the #of minutes the bus is predicted to arrive <b>early/late</b> (<b>positive/negative</b>).</p>
      <center> <button onclick="mainMapBuilder()">Return To Main Map</button></center>
