@@ -58,7 +58,7 @@
 <div class="row">
   <div class="leftcolumn">
     <div class="card">
-      <h2>Map</h2>
+      <h2>MARTA Bus Prediction Map Powered By "Long short-term Memory Recursive Neural Network"</h2>
 
       Data last updated At: <b>{{update_time}}</b>
       <br>There are currently <b>{{home_annoc[0]}}</b> buses running across <b>{{home_annoc[1]}}</b> routes
@@ -74,9 +74,7 @@
       
       <script>
            
-           //var encode_key = {{encode_key|safe}}
-           
-           //var routeList = {{routeList|safe}};
+          
            
            
             //south,north,east,west
@@ -128,6 +126,12 @@
            iconAnchor: [16,32],
            popupAnchor:[0,-16]});
            
+           var routeIcon = L.icon({
+           iconUrl: "{{url_for('static',filename='images/map.png')}}",
+           iconSize:[32,32],
+           iconAnchor: [16,32],
+           popupAnchor:[0,-16]});
+           
            //layer declaration
            
            var mainLayer = L.layerGroup();
@@ -138,8 +142,13 @@
            //method declarations
            
            
-           var stopBuild = function(routeID){
+           var stopBuild = function(valueID,ifAdherence){
            
+           routeID = value[valueID][4];
+           
+           if(ifAdherence){
+                 vehicleID = value[valueID][2];
+           }
            //builds stop markers
                  for(var i=0;i<stops.length;i++){
                  
@@ -148,7 +157,18 @@
                             marker = L.marker([stops[i][1],stops[i][0]],{icon:stopIcon});
                             marker.bindPopup("<b>Stop <br> ID:</b> "+stops[i][2]+"<br> <b>Route:</b> "+stops[i][3]);
                             dynamicLayer.addLayer(marker); 
-
+                            
+                            if(ifAdherence){
+                            
+                                  textMarker = L.marker([stops[i][1]-.005,stops[i][0]],
+                                        {icon: L.divIcon({
+                                              html: String(stops[i][4][String(vehicleID)]),
+                                              className:'text-below-marker'})
+                                  });
+                                  
+                                  dynamicLayer.addLayer(textMarker);
+                            
+                            }
                        }
                  
                  
@@ -171,26 +191,52 @@
            
            
            
-           //TODO Copy button functionality from buildMain...
+          
+           
+           
+           //TODO add vehicle from route selection option
+           
+           var buildVehicle = function(vehicleNum){
+                 mapClear(dynamicLayer);
+               
+                 vehicleAr = value[vehicleNum]
+                     
+                 marker = L.marker([vehicleAr[1],vehicleAr[0]],{icon:busIcon});
+                 marker.bindPopup("<b>Vehicle <br> ID:</b> "+vehicleAr[2]+"<br> <b>Route:</b> "+vehicleAr[4]
+                       +"<br> <b> Direction:</b> "+vehicleAr[3] );
+                 dynamicLayer.addLayer(marker);
+           
+                 stopBuild(vehicleNum,true);
+                 mapClear(mainLayer);
+                 dynamicLayer.addTo(myMap);
+           }
+           
+           
+           
+           
+            //TODO Copy button functionality from buildMain...
            
            var buildRoute = function(routeID){
                 mapClear(dynamicLayer);
                //builds bus markers
+                 Ihold = 0
                  for(var i=0;i<value.length;i++){
                        
                        
                        if(value[i][4]==routeID){
-                             
+                             Ihold = i   
                              marker = L.marker([value[i][1],value[i][0]],{icon:busIcon});
                              marker.bindPopup("<b>Vehicle <br> ID:</b> "+value[i][2]+"<br> <b>Route:</b> "+value[i][4]
-                                   +"<br> <b> Direction:</b> "+value[i][3]);
+                                   +"<br> <b> Direction:</b> "+value[i][3]+"<br> <button"+' onclick="buildVehicle('+i+')">'
+                                   +"Select Vehicle</button>");
+                             
                              dynamicLayer.addLayer(marker);
                              
                              
                  
                        }
                  }
-                 stopBuild(routeID);
+                 stopBuild(Ihold,false);
                  mapClear(mainLayer);
                  dynamicLayer.addTo(myMap);
                  
@@ -198,30 +244,18 @@
            }
            
            
-           //TODO add vehicle from route selection option
            
-           var buildVehicle = function(vehicleAr){
-                 mapClear(dynamicLayer);
-               
-                 marker = L.marker([vehicleAr[1],vehicleAr[0]],{icon:busIcon});
-                 marker.bindPopup("<b>Vehicle <br> ID:</b> "+vehicleAr[2]+"<br> <b>Route:</b> "+value[4]
-                       +"<br> <b> Direction:</b> "+value[3] );
-                 dynamicLayer.addLayer(marker);
-           
-                 stopBuild(vehicleAr[4]);
-                 mapClear(mainLayer);
-                 dynamicLayer.addTo(myMap);
-           }
            
            
            //WORKS !! :)  
            
            var mainMapBuilder = function(){
+                 mapClear(mainLayer);
                  mapClear(dynamicLayer);
                  for(var i=0;i<value.length;i++){
                        //console.log(value.get(i));
                        //{Icon:south}
-                       marker = L.marker([value[i][1],value[i][0]],{icon:busIcon});
+                       marker = L.marker([value[i][1],value[i][0]],{icon:routeIcon});
                        marker.bindPopup("<b>Vehicle <br> ID:</b> "+value[i][2]+"<br> <b>Route:</b> "+value[i][4]
                              +"<br> <b> Direction:</b> <br> "+value[i][3]+"<br> <button"+' onclick="buildRoute('+value[i][4]+')">'
                              +"Select Route</button>");
@@ -239,75 +273,49 @@
           // deprecated....mainLayer.addTo(myMap)
           
           
+          var revampMapBuilder = function(){
+          
+                mapClear(mainLayer);
+                mapClear(dynamicLayer);
+          
+          
+          
+          
+          }
            
            
            
       </script>
       
       <!--<script src="{{url_for('static',filename='mapper.js')}}"></script>-->
-      <p>Some text..</p>
       
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+      
+     
     </div>
 
 </div>
-  
+
+
 <!-- End buttons / start side bars -->
   <div class="rightcolumn">
     <div class="card">
-      <h2>Route Selection</h2>
-      <div class="fakeimg" style="height:100px;">
-      <div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Select a Route</button>
-  <div id="myDropdown" class="dropdown-content">
-    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-         
-         
-         <!--   (button list for route column non functional)
-         <script>
-         //not working currently (need different drop down option not neccesary however.)
-         var routeList = {{routeList|safe}};
-         
-         var frag = document.createDocumentFragment();
-         
-         for(var irr=0;irr<routeList.length;irr++){ 
-               var elem = document.createElement('input');
-               elem.type = 'button';
-               elem.value = 'button';
-               elem.onclick = buildRoute(routeList[irr]);
-               frag.appendChild(elem);
-         }
-         document.body.appendChild(frag);
-         </script>
-         -->
-         <!--
-          <a href="#about">About</a>
-          <a href="#base">Base</a>
-          <a href="#blog">Blog</a>
-          <a href="#contact">Contact</a>
-          <a href="#custom">Custom</a>
-          <a href="#support">Support</a>
-          <a href="#tools">Tools</a>   -->
-        </div>
-      </div>
-      
-      </div>
-      <p>list of buttons here for selecting routes</p>
+      <h1>How To Use</h1>
+      <h3>Step 1: Select a Route</h3>
+     <p>click on a bus to select a specific route to look at <image src="{{url_for('static',filename='images/bus.png')}}"></p>
+     <h3>Step 2: Select a Vehicle</h3>
+     <p> click on a bus to choose the specific vehicle to look at the predicted values for </p>
+     <h3>Step 3: Look at the predicted adherence</h3>
+     <p> adherence represents the #of minutes the bus is predicted to arrive <b>early/late</b> (<b>positive/negative</b>).</p>
+     <center> <button onclick="mainMapBuilder()">Return To Main Map</button></center>
     </div>
-    <div class="card">
-      <h3>Vehicle Selection</h3>
-      <p> list of buttons here for selecting by vehicle (maybe) </p>
-    </div>
-    <div class="card">
-      <h3>Submit button? or time slider</h3>
-      <p>Some text..</p>
-    </div>
+   
   </div>
 </div>
 
 <div class="footer">
   <h2>SST, GGC Logos?</h2>
-  <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+  <div>Icons made by <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx">xnimrodx</a>, and <a href="https://www.flaticon.com/authors/pixel-perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
   <!--<div class="fakeimg">-->
      <!--   <image src="{{url_for('static',filename='images/ggc_ad.png')}}"> -->
  <!-- </div>-->

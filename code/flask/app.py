@@ -38,15 +38,18 @@ app.secret_key = 'asdgagaweawsfasdfaqw'
 # Map Data Gathered here-------------  
 
 # Bus Data: lat lon, vehicle id, dir, route
-lister=[[-84.362307,33.82584490,"1710","Northbound",4],[-84.5896475,33.5589891,"1841","Eastbound",6]]
+lister=[[-84.362307,33.82584490,"1710","Northbound",4],[-84.5896475,33.5589891,"1841","Eastbound",6]
+        ,[-83.22,33.995,"1654","Southbound",4]];
 update_time="04/04/2021 7:56 P.m."
 
-#Stop Data : lat, long, stopID, routeID
-stops = [[-84.5896475,36.5589891,1456,5],[-84.5896475,30.5589891,155424,4],[-84.5896475,32.5589891,123432,4],[-84.5896475,34.5589891,12341,4]]
+#Stop Data : lat, long, stopID, routeID, dictionary of {'vehicleId':adherence}
+stops = [[-84.5896475,36.5589891,1456,5],[-84.5896475,30.5589891,155424,4,{'1710':-4,'1654':-7}],
+         [-84.5896475,32.5589891,123432,4,{'1710':6,'1654':0.0}],[-84.5896475,34.5589891,12341,4,{'1710':10,'1654':3}]]
 
 #prediction Data: TODO
 
-routeList = [4,6,5]
+#not needed
+#routeList = [4,6,5]
 
 
 #data prepro here --------
@@ -84,8 +87,14 @@ home_annoc = [str(len(lister)),str(2)]
 @app.route('/Home')
 @app.route('/home')
 def home_builder():
+      
+      
+      
+      
+      
+      
       return render_template("home.html",value =lister,update_time=update_time,
-                             home_annoc=home_annoc,stops=stops,routeList=routeList)
+                             home_annoc=home_annoc,stops=stops)
 
 
 @app.route('/Data')
