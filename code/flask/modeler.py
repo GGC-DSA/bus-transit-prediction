@@ -22,21 +22,18 @@ from keras.models import load_model
 
 
 
-checkDat = pd.read_json("data\/testData.json",orient="values")
+stop_constant = pd.read_csv("data\/stop_constant.csv")
 
-print(checkDat.head())
+print(stop_constant)
+
+
 
 
 model = load_model("data\/lstm.h5")
 
 
-
-
 #to change to rawBusdata.json
-data=pd.read_json("data\/testData.json",orient="values")
-
-
-
+data=pd.read_json("data\/busData.json",orient="values")
 
 
 
@@ -45,13 +42,10 @@ data.rename(columns = {'last_updated':"timeStamp"}, inplace = True)
 
 
 
-#prepro
 #Recategorizing Iteration as a integer for comparisons later
 
 #initial Data manip
 print(data.head(1).values)
-
-
 
 
 
@@ -72,6 +66,7 @@ data=data.reset_index()
 data["timeStamp"] = data["timeStamp"].dt.hour + data["timeStamp"].dt.minute/60
 
 
+
 x_live = data[["timeStamp","vehicle","stop_id","route","direction","longitude","latitude"]]
 
 
@@ -85,6 +80,20 @@ x_live[["latitude","longitude","vheicle","direction","route"]].to_csv("data\/bus
 
 #start prediction prepro ----
 
+#index / column definition needed here
+x_modi = pd.DataFrame()
+
+stop_constant["route"] = router
+
+#this probably doesn't work waiting for testing data
+for index, row in x_live.iterrows():
+      for indie, boat in stop_constant[stop_constant["route"]==row["route"]]:
+            row["stop_id"] = boat["stop_id"]
+            x_modi.append(row)
+
+
+
+
 #label encoding testable data
 label_encoder = []
 
@@ -97,11 +106,12 @@ for i in ["vehicle","stop_id","route","direction"]:
 X_test = x.to_numpy().reshape(len(x),1,7)
 
 
+y_pred = model.predict(X_test)
+
+#TODO format output file 2
 
 
-
-
-
+#output file h........
 
 #deprecated from training code
 #X_train, X_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=5)

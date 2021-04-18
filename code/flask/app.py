@@ -40,18 +40,19 @@ app.secret_key = 'asdgagaweawsfasdfaqw'
 
 # Map Data Gathered here-------------  
 
+#Working on provider classes (dataCollector gets busData src and stopData needs busData to predict for adh)
 
-busData = pd.read_csv("data/busData.csv")
-stopData = pd.read_json("data/stopData.json")
-
-
-
+#busData = pd.read_csv("data/busData.csv")
+#stopData = pd.read_json("data/stopData.json")
 
 
 
 
 
-'''  DATA FORMAT
+
+
+
+''' DATA FORMAT
 # Bus Data: lat lon, vehicle id, dir, route
 lister=[[-84.362307,33.82584490,"1710","Northbound",4],[-84.5896475,33.5589891,"1841","Eastbound",6]
         ,[-83.22,33.995,"1654","Southbound",4]];
@@ -60,8 +61,8 @@ update_time="04/04/2021 7:56 P.m."
 #Stop Data : lat, long, stopID, routeID, dictionary of {'vehicleId':adherence}
 stops = [[-84.5896475,36.5589891,1456,5],[-84.5896475,30.5589891,155424,4,{'1710':-4,'1654':-7}],
          [-84.5896475,32.5589891,123432,4,{'1710':6,'1654':0.0}],[-84.5896475,34.5589891,12341,4,{'1710':10,'1654':3}]]
-'''
 
+'''
 
 
 #data prepro here --------
