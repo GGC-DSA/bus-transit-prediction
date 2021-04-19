@@ -24,9 +24,10 @@ import numpy as np
 from flask import Flask, render_template, request, redirect, url_for, flash, json
 from sklearn import preprocessing as prepro
 import os.path
-
+from flask_cors import CORS
 
 app = Flask(__name__, template_folder='templates')
+CORS(app)
 
 #Flask secret key TODO set as env
 app.secret_key = 'asdgagaweawsfasdfaqw'
@@ -138,5 +139,9 @@ def code_builder():
       return render_template("code.html")
 
 
-
-app.run(debug=False)
+if __name__ == '__main__':
+	from gevent.pywsgi import WSGIServer
+	app.debug = False
+	http_server = WSGIServer(('',8000),app)
+	http_server.serve_forever()
+	#app.run(debug=False,host='127.0.0.1',port=8000)
