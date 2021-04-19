@@ -24,7 +24,7 @@ import numpy as np
 from flask import Flask, render_template, request, redirect, url_for, flash, json
 from sklearn import preprocessing as prepro
 import os.path
-
+from datetime import date
 
 app = Flask(__name__, template_folder='templates')
 
@@ -122,8 +122,10 @@ def data_builder():
       
       #return as variable
       
+    
+      values = [random.randint(-2,5) for x in range(0,24)]
+      today = date.today()
       
-      values = []
       
       return render_template("data.html",values=values)
 
