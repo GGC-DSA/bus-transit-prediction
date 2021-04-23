@@ -21,10 +21,40 @@ import json
 from keras.models import load_model
 
 
+with open('data/jsonout.json') as f:
+      live_sel = json.load(f)
+
+#print(live_sel)
+live_sel = [y['PutRequest']['Item'] for x in live_sel for y in x["bus_data"]]
+
+fieldNames=['adherence','block_abbr','block_id','direction','last_updated','latitude','longitude','route','stop_id'
+    ,'timepoint','trip_id','vehicle']
+
+inner = 0
+
+def unfolder(di):
+      diRet = []
+      for x in fieldNames:
+            diRet.append(di[x]["S"])
+      return diRet
+
+
+unfolded ={}
+
+for x in live_sel:
+      unfolded[str(inner)]=unfolder(x)
+      inner += 1
+
+
+data = pd.DataFrame.from_dict(unfolded,orient="index",columns=fieldNames)
+
+#print(live_sel)
+
 
 stop_constant = pd.read_csv("data\/stop_constant.csv")
 
-print(stop_constant)
+#print(stop_constant)
+
 
 
 
@@ -32,8 +62,8 @@ print(stop_constant)
 model = load_model("data\/lstm.h5")
 
 
-#to change to rawBusdata.json
-data=pd.read_json("data\/busData.json",orient="values")
+
+
 
 
 
@@ -45,7 +75,7 @@ data.rename(columns = {'last_updated':"timeStamp"}, inplace = True)
 #Recategorizing Iteration as a integer for comparisons later
 
 #initial Data manip
-print(data.head(1).values)
+#print(data.head(1).values)
 
 
 
@@ -73,7 +103,7 @@ x_live = data[["timeStamp","vehicle","stop_id","route","direction","longitude","
 #transforming/extending data ----------------------------------------------------------------------
 
 #Saving first file neccesary for app.py
-x_live[["latitude","longitude","vheicle","direction","route"]].to_csv("data\/busData.csv")
+x_live[["latitude","longitude","vehicle","direction","route"]].to_csv("data\/busData.csv")
 
 
 
@@ -83,11 +113,45 @@ x_live[["latitude","longitude","vheicle","direction","route"]].to_csv("data\/bus
 #index / column definition needed here
 x_modi = pd.DataFrame()
 
-stop_constant["route"] = router
+#stop_constant["route"] = router
 
 #this probably doesn't work waiting for testing data
+
+#print(stop_constant,x_live)
+
+#x_modi = pd.concat([x_live[["vehicle","route"]],stop_constant[["stop_id","route","stop_lat","stop_lon"]]])
+
+x_modi = pd.DataFrame()
+
+
+#Generating 2nd file format
+#pandas.EXPLOSION!!!! lol
+def shapeCharge(id,dic):
+      shape = x_live[x_live["vehicle"]==id]
+      charge = stop_constant[stop_constant["route"].isin(shape["route"].values)]
+      #print(charge)
+      shape["stop_id"] = shape["stop_id"].astype(str)
+      #print(charge)
+      for route,stop,lat,lon in charge[["route","stop_id","stop_lat","stop_lon"]].itertuples(index=False):
+            #print(x)
+            if(str(stop) in dic):
+                  dic[str(stop)][4][str(id)]=None
+            else:
+                  dic[str(stop)]=[lat,lon,stop,route,{str(id):None}]
+      return dic
+
+
+emptyDict = {}
+
+for x in x_live["vehicle"].unique():
+      emptyDict = shapeCharge(x,emptyDict)
+
+print(emptyDict)
+
+'''
 for index, row in x_live.iterrows():
-      for indie, boat in stop_constant[stop_constant["route"]==row["route"]]:
+      for boat in stop_constant[stop_constant["route"]==row["route"]]:
+            print(row)
             row["stop_id"] = boat["stop_id"]
             x_modi.append(row)
 
@@ -108,6 +172,8 @@ X_test = x.to_numpy().reshape(len(x),1,7)
 
 y_pred = model.predict(X_test)
 
+
+print(y_pred)
 #TODO format output file 2
 
 
@@ -119,7 +185,7 @@ y_pred = model.predict(X_test)
 #X_train, X_test = X_train.to_numpy().reshape(len(X_train),1,7), X_test.to_numpy().reshape(len(X_test),1,7)
 
 
-
+'''
 
 
 
