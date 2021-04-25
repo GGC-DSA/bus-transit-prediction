@@ -25,13 +25,13 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from sklearn import preprocessing as prepro
 import os.path
 from datetime import date
-
+'''
 app = Flask(__name__, template_folder='templates')
 
 #Flask secret key TODO set as env
 app.secret_key = 'asdgagaweawsfasdfaqw'
 
-
+'''
 
 
 
@@ -42,16 +42,17 @@ app.secret_key = 'asdgagaweawsfasdfaqw'
 
 #Working on provider classes (dataCollector gets busData src and stopData needs busData to predict for adh)
 
-#busData = pd.read_csv("data/busData.csv")
-#stopData = pd.read_json("data/stopData.json")
+busData = pd.read_csv("data/busData.csv")
+stopData = pd.read_json("data/stopData.json")
+
+print(stopData)
+print(busData)
 
 
 
 
 
-
-
-
+'''
 #DATA FORMAT
 # Bus Data: lat lon, vehicle id, dir, route
 lister=[[-84.362307,33.82584490,"1710","Northbound",4],[-84.5896475,33.5589891,"1841","Eastbound",6]
@@ -142,3 +143,5 @@ def code_builder():
 
 
 app.run(debug=False)
+
+'''

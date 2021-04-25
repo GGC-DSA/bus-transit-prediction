@@ -110,11 +110,11 @@ x_live[["latitude","longitude","vehicle","direction","route"]].to_csv("data\/bus
 
 #start prediction prepro ----
 
-x_modi = pd.DataFrame()
+
 
 #Generating 2nd file format
 #pandas.EXPLOSION!!!! lol
-def shapeCharge(id,dic):
+def shapeCharge(id,dic,lister):
       shape = x_live[x_live["vehicle"]==id]
       charge = stop_constant[stop_constant["route"].isin(shape["route"].values)]
       #print(charge)
@@ -126,19 +126,23 @@ def shapeCharge(id,dic):
                   dic[str(stop)][4][str(id)]=None
             else:
                   dic[str(stop)]=[lat,lon,stop,route,{str(id):None}]
-            mergedDat = x_modi.append(pd.DataFrame({"timeStamp":shape["timeStamp"],"vehicle":str(id),"stop_id":stop,"route":route,"direction":shape["direction"],
+            lister.append({"timeStamp":shape["timeStamp"],"vehicle":str(id),"stop_id":stop,"route":route,"direction":shape["direction"],
                                                     "longitude":shape["longitude"],"latitude":shape["latitude"]})
-                                                    ,ignore_index=True,verify_integrity=False)
-            print(len(mergedDat))      
+                                                   
+            #print(len(lister))      
       
-      return dic,mergedDat
+      return dic,lister
 
 
-
+x_modi = pd.DataFrame()
 emptyDict = {}
-
+x_modi_lister = []
 for x in x_live["vehicle"].unique():
-      emptyDict, x_modi = shapeCharge(x,emptyDict)
+      emptyDict, x_modi_lister = shapeCharge(x,emptyDict,x_modi_lister)
+
+x_modi = pd.DataFrame(x_modi_lister,columns=["timeStamp","vehicle","stop_id","route","direction","longitude","latitude"])
+print(len(x_modi))
+
 
 #print(emptyDict)
 #print(x_modi)
@@ -153,6 +157,7 @@ for x in x_live["vehicle"].unique():
 
 label_encoder = []
 for i in ["vehicle","stop_id","route","direction"]:
+      x_modi[i] = x_modi[i].astype(str)
       labeler = prepro.LabelEncoder()
       x_modi[i] = labeler.fit_transform(x_modi[i])
       label_encoder.append(labeler)
@@ -171,35 +176,25 @@ x_modi["adherence"] = y_pred
 x_modi["stop_id"] = pd.Series(label_encoder[1].inverse_transform(x_modi["stop_id"])).astype(str)
 x_modi["vehicle"] = pd.Series(label_encoder[0].inverse_transform(x_modi["vehicle"])).astype(str)
 
-#print(x_modi.columns)
-#print(emptyDict)
-#print(x_modi[x_modi["stop_id"]=='900686'])
 
-#print(x_modi)
-#print(emptyDict['900686'])
-'''TODO Remove
-for x in emptyDict:
-      for y in emptyDict[x][4]:
-            if(not emptyDict[x][4][y] == None):  
-                  print(emptyDict[x][4])
-'''
 
 
 for stop_id, vehicle, adherence in x_modi[["stop_id","vehicle","adherence"]].itertuples(index=False):
-      #print(adherence)
-      #print(type(stop_id))
-      #print(str(label_encoder[0].inverse_transform([vehicle])[0])+"  ;;  "+str(label_encoder[1].inverse_transform([stop_id])[0]))
-      #if( emptyDict[stop_id][4][vehicle] == None):
-       #     print(f'vehicle {vehicle} stop {stop_id}  ',emptyDict[stop_id][4])
+ 
       emptyDict[stop_id][4][vehicle]= adherence 
    
 
 
 
+emptyDict = [emptyDict[x] for x in emptyDict]
 
-#print(x_modi["vehicle"]=="1472" and x_modi["stop_id"])
+print(emptyDict)
 
+with open("data/stopData.json",'w+') as f:
+      json.dump(emptyDict,f)
+      
 
+''' Code to test whether None spaces are left in adherence dict
 testList = []
 otherlist =[]
 for x in emptyDict:
@@ -212,7 +207,7 @@ for x in emptyDict:
 for x in range(0,10):
       print(x_modi[x_modi["stop_id"]==otherlist[x]][x_modi["vehicle"]==testList[x]])
                   
-                  
+'''               
         
 
 
@@ -223,13 +218,6 @@ for x in testList:
             output.append(x)
 #print(output)
 '''
-#print(x_modi[x_modi["vehicle"].isin(output)])
-
-#plt.plot(range(0,len(y_pred)),y_pred)
-#print(y_pred)
-
-
-
 
 
 
