@@ -110,19 +110,7 @@ x_live[["latitude","longitude","vehicle","direction","route"]].to_csv("data\/bus
 
 #start prediction prepro ----
 
-#index / column definition needed here
 x_modi = pd.DataFrame()
-
-#stop_constant["route"] = router
-
-#this probably doesn't work waiting for testing data
-
-#print(stop_constant,x_live)
-
-#x_modi = pd.concat([x_live[["vehicle","route"]],stop_constant[["stop_id","route","stop_lat","stop_lon"]]])
-
-x_modi = pd.DataFrame()
-
 
 #Generating 2nd file format
 #pandas.EXPLOSION!!!! lol
@@ -138,54 +126,110 @@ def shapeCharge(id,dic):
                   dic[str(stop)][4][str(id)]=None
             else:
                   dic[str(stop)]=[lat,lon,stop,route,{str(id):None}]
-      return dic
+            mergedDat = x_modi.append(pd.DataFrame({"timeStamp":shape["timeStamp"],"vehicle":str(id),"stop_id":stop,"route":route,"direction":shape["direction"],
+                                                    "longitude":shape["longitude"],"latitude":shape["latitude"]})
+                                                    ,ignore_index=True,verify_integrity=False)
+            print(len(mergedDat))      
+      
+      return dic,mergedDat
+
 
 
 emptyDict = {}
 
 for x in x_live["vehicle"].unique():
-      emptyDict = shapeCharge(x,emptyDict)
+      emptyDict, x_modi = shapeCharge(x,emptyDict)
 
-print(emptyDict)
+#print(emptyDict)
+#print(x_modi)
 
-'''
-for index, row in x_live.iterrows():
-      for boat in stop_constant[stop_constant["route"]==row["route"]]:
-            print(row)
-            row["stop_id"] = boat["stop_id"]
-            x_modi.append(row)
+#timeStamp, vehicle, stop_id, route, direction, longitude, latitude
+
+ 
 
 
 
 
-#label encoding testable data
+
 label_encoder = []
-
 for i in ["vehicle","stop_id","route","direction"]:
       labeler = prepro.LabelEncoder()
-      x[i] = labeler.fit_transform(x[i])
+      x_modi[i] = labeler.fit_transform(x_modi[i])
       label_encoder.append(labeler)
 
+#print(x_modi)
 
-X_test = x.to_numpy().reshape(len(x),1,7)
+X_test = x_modi.to_numpy().reshape(len(x_modi),1,7)
 
 
 y_pred = model.predict(X_test)
 
 
-print(y_pred)
-#TODO format output file 2
+x_modi["adherence"] = y_pred
+
+#print(x_modi)
+x_modi["stop_id"] = pd.Series(label_encoder[1].inverse_transform(x_modi["stop_id"])).astype(str)
+x_modi["vehicle"] = pd.Series(label_encoder[0].inverse_transform(x_modi["vehicle"])).astype(str)
+
+#print(x_modi.columns)
+#print(emptyDict)
+#print(x_modi[x_modi["stop_id"]=='900686'])
+
+#print(x_modi)
+#print(emptyDict['900686'])
+'''TODO Remove
+for x in emptyDict:
+      for y in emptyDict[x][4]:
+            if(not emptyDict[x][4][y] == None):  
+                  print(emptyDict[x][4])
+'''
 
 
-#output file h........
+for stop_id, vehicle, adherence in x_modi[["stop_id","vehicle","adherence"]].itertuples(index=False):
+      #print(adherence)
+      #print(type(stop_id))
+      #print(str(label_encoder[0].inverse_transform([vehicle])[0])+"  ;;  "+str(label_encoder[1].inverse_transform([stop_id])[0]))
+      #if( emptyDict[stop_id][4][vehicle] == None):
+       #     print(f'vehicle {vehicle} stop {stop_id}  ',emptyDict[stop_id][4])
+      emptyDict[stop_id][4][vehicle]= adherence 
+   
 
-#deprecated from training code
-#X_train, X_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=5)
 
-#X_train, X_test = X_train.to_numpy().reshape(len(X_train),1,7), X_test.to_numpy().reshape(len(X_test),1,7)
+
+
+#print(x_modi["vehicle"]=="1472" and x_modi["stop_id"])
+
+
+testList = []
+otherlist =[]
+for x in emptyDict:
+      for y in emptyDict[x][4]:
+            if( emptyDict[x][4][y] == None):  
+                  testList.append(y)
+                  otherlist.append(x)
+
+
+for x in range(0,10):
+      print(x_modi[x_modi["stop_id"]==otherlist[x]][x_modi["vehicle"]==testList[x]])
+                  
+                  
+        
 
 
 '''
+output=[]
+for x in testList:
+      if x not in output:
+            output.append(x)
+#print(output)
+'''
+#print(x_modi[x_modi["vehicle"].isin(output)])
+
+#plt.plot(range(0,len(y_pred)),y_pred)
+#print(y_pred)
+
+
+
 
 
 
