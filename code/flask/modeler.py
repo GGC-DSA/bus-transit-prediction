@@ -9,22 +9,47 @@ import numpy as np
 import tensorflow as tf
 import keras
 import pandas as pd
-import seaborn as sns
-from pylab import rcParams
-import matplotlib.pyplot as plt
-from matplotlib import rc
 from sklearn.model_selection import train_test_split
-from pandas.plotting import register_matplotlib_converters
 from sklearn import preprocessing as prepro
 import json
 
 from keras.models import load_model
 
 
+with open('data/jsonout.json') as f:
+      live_sel = json.load(f)
+
+#print(live_sel)
+live_sel = [y['PutRequest']['Item'] for x in live_sel for y in x["bus_data"]]
+
+fieldNames=['adherence','block_abbr','block_id','direction','last_updated','latitude','longitude','route','stop_id'
+    ,'timepoint','trip_id','vehicle']
+
+inner = 0
+
+def unfolder(di):
+      diRet = []
+      for x in fieldNames:
+            diRet.append(di[x]["S"])
+      return diRet
+
+
+unfolded ={}
+
+for x in live_sel:
+      unfolded[str(inner)]=unfolder(x)
+      inner += 1
+
+
+data = pd.DataFrame(list(unfolded.items()),orient="index",columns=fieldNames)
+
+#print(live_sel)
+
 
 stop_constant = pd.read_csv("data\/stop_constant.csv")
 
-print(stop_constant)
+#print(stop_constant)
+
 
 
 
@@ -32,8 +57,8 @@ print(stop_constant)
 model = load_model("data\/lstm.h5")
 
 
-#to change to rawBusdata.json
-data=pd.read_json("data\/busData.json",orient="values")
+
+
 
 
 
@@ -45,7 +70,7 @@ data.rename(columns = {'last_updated':"timeStamp"}, inplace = True)
 #Recategorizing Iteration as a integer for comparisons later
 
 #initial Data manip
-print(data.head(1).values)
+#print(data.head(1).values)
 
 
 
@@ -73,52 +98,121 @@ x_live = data[["timeStamp","vehicle","stop_id","route","direction","longitude","
 #transforming/extending data ----------------------------------------------------------------------
 
 #Saving first file neccesary for app.py
-x_live[["latitude","longitude","vheicle","direction","route"]].to_csv("data\/busData.csv")
+x_live[["latitude","longitude","vehicle","direction","route"]].to_csv("data\/busData.csv")
 
 
 
 
 #start prediction prepro ----
 
-#index / column definition needed here
+
+
+#Generating 2nd file format
+#pandas.EXPLOSION!!!! lol
+def shapeCharge(id,dic,lister):
+      shape = x_live[x_live["vehicle"]==id]
+      charge = stop_constant[stop_constant["route"].isin(shape["route"].values)]
+      #print(charge)
+      shape["stop_id"] = shape["stop_id"].astype(str)
+      #print(charge)
+      for route,stop,lat,lon in charge[["route","stop_id","stop_lat","stop_lon"]].itertuples(index=False):
+            #print(x)
+            if(str(stop) in dic):
+                  dic[str(stop)][4][str(id)]=None
+            else:
+                  dic[str(stop)]=[lon,lat,stop,route,{str(id):None}]
+            lister.append({"timeStamp":shape["timeStamp"],"vehicle":str(id),"stop_id":stop,"route":route,"direction":shape["direction"],
+                                                    "longitude":shape["longitude"],"latitude":shape["latitude"]})
+                                                   
+            #print(len(lister))      
+      
+      return dic,lister
+
+
 x_modi = pd.DataFrame()
+emptyDict = {}
+x_modi_lister = []
+for x in x_live["vehicle"].unique():
+      emptyDict, x_modi_lister = shapeCharge(x,emptyDict,x_modi_lister)
 
-stop_constant["route"] = router
-
-#this probably doesn't work waiting for testing data
-for index, row in x_live.iterrows():
-      for indie, boat in stop_constant[stop_constant["route"]==row["route"]]:
-            row["stop_id"] = boat["stop_id"]
-            x_modi.append(row)
-
+x_modi = pd.DataFrame(x_modi_lister,columns=["timeStamp","vehicle","stop_id","route","direction","longitude","latitude"])
+#print(len(x_modi))
 
 
+#print(emptyDict)
+#print(x_modi)
 
-#label encoding testable data
+#timeStamp, vehicle, stop_id, route, direction, longitude, latitude
+
+ 
+
+
+
+
+
 label_encoder = []
-
 for i in ["vehicle","stop_id","route","direction"]:
+      x_modi[i] = x_modi[i].astype(str)
       labeler = prepro.LabelEncoder()
-      x[i] = labeler.fit_transform(x[i])
+      x_modi[i] = labeler.fit_transform(x_modi[i])
       label_encoder.append(labeler)
 
+#print(x_modi)
 
-X_test = x.to_numpy().reshape(len(x),1,7)
+X_test = x_modi.to_numpy().reshape(len(x_modi),1,7)
 
 
 y_pred = model.predict(X_test)
 
-#TODO format output file 2
+
+x_modi["adherence"] = y_pred
+
+#print(x_modi)
+x_modi["stop_id"] = pd.Series(label_encoder[1].inverse_transform(x_modi["stop_id"])).astype(str)
+x_modi["vehicle"] = pd.Series(label_encoder[0].inverse_transform(x_modi["vehicle"])).astype(str)
 
 
-#output file h........
-
-#deprecated from training code
-#X_train, X_test, y_train, y_test = train_test_split(x,y, test_size=0.2, random_state=5)
-
-#X_train, X_test = X_train.to_numpy().reshape(len(X_train),1,7), X_test.to_numpy().reshape(len(X_test),1,7)
 
 
+for stop_id, vehicle, adherence in x_modi[["stop_id","vehicle","adherence"]].itertuples(index=False):
+ 
+      emptyDict[stop_id][4][vehicle]= round(adherence,2) 
+   
+
+
+
+emptyDict = [emptyDict[x] for x in emptyDict]
+
+#print(emptyDict)
+
+with open("data/stopData.json",'w+') as f:
+      json.dump(emptyDict,f)
+      
+
+''' Code to test whether None spaces are left in adherence dict
+testList = []
+otherlist =[]
+for x in emptyDict:
+      for y in emptyDict[x][4]:
+            if( emptyDict[x][4][y] == None):  
+                  testList.append(y)
+                  otherlist.append(x)
+
+
+for x in range(0,10):
+      print(x_modi[x_modi["stop_id"]==otherlist[x]][x_modi["vehicle"]==testList[x]])
+                  
+'''               
+        
+
+
+'''
+output=[]
+for x in testList:
+      if x not in output:
+            output.append(x)
+#print(output)
+'''
 
 
 

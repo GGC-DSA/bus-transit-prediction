@@ -160,7 +160,7 @@
                             
                             if(ifAdherence){
                             
-                                  textMarker = L.marker([stops[i][1]-.005,stops[i][0]],
+                                  textMarker = L.marker([stops[i][1]-.00001,stops[i][0]],
                                         {icon: L.divIcon({
                                               html: String(stops[i][4][String(vehicleID)]),
                                               className:'text-below-marker'})
@@ -293,15 +293,20 @@
                 for(var j=0;j<stops.length;j++){
                     stop = stops[j];
                     routeStr = String(stop[3]);
-                   // alert(routeStr);
-                    if(routeStr in Object.keys(dupeList)){
+                    //alert(routeStr);
+                    if(Object.keys(dupeList).includes(routeStr)){
                         
                         lister = dupeList[routeStr];
+                        
+                        if(lister==undefined){
+                              alert(stop);
+                        }
+                        
                         dupeList[routeStr] = [lister[0]+1,[(lister[1][0]*lister[0]/(lister[0]+1))+stop[0]/(lister[0]+1),
                             (lister[1][1]*lister[0])/(lister[0]+1)+(stop[1]/(lister[0]+1))]];
                     }
                     else{
-                        dupeList[routeStr] = [1,[ stop[0],stop[1] ]];
+                        dupeList[routeStr] = [1,[ stop[0],stop[1]]];
                     }
                     
                     
@@ -310,7 +315,7 @@
                 //alert(Object.keys(dupeList));
                 Object.keys(dupeList).forEach(key => {
   
-                    marker = L.marker([dupeList[key][1][1]-2,dupeList[key][1][0]],{icon:routeIcon});
+                    marker = L.marker([dupeList[key][1][1],dupeList[key][1][0]],{icon:routeIcon});
                     
                      marker.bindPopup("<b>Route</b> <br> <b>RouteID:</b> "+key
                              +"<br> <button onclick=buildRoute("+key+")>"
@@ -360,4 +365,5 @@
 </div>
 
 </body>
+
 
