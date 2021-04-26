@@ -7,15 +7,7 @@ Created on Tue Mar  2 21:34:47 2021
 
 #TODO LIST
 '''
-1. implement different icons based on directionality [[having issues (maybe image size idk)--ask for help maybe ]] 
-2. fix scheme on rhs column (working on)  <exact interface still in flux>
-3. color scheme?
-4. other pages (not homepage)
-5. build live data in --need pipeline to do. [is test data a option for presentation?]
-6. Create .env secret key [minimum priority]
-7. Install into ec2 instance
-8. Create domain with r53
-9. Configure dns? (need to look into how)
+secret key read in file .env
 '''
 
 
@@ -26,112 +18,49 @@ from sklearn import preprocessing as prepro
 import os.path
 from datetime import date
 import json as js
+from dotenv import load_dotenv
+import os
  #=============================================================================
  
 app = Flask(__name__, template_folder='templates')
  
  #Flask secret key TODO set as env
-app.secret_key = 'asdgagaweawsfasdfaqw'
+load_dotenv(dotenv_path="data/key.env")
+app.secret_key = os.getenv("SECRET_KEY_FLASK")
  
  
  #=============================================================================
 
 
 
-
-
-# Map Data Gathered here-------------  
-
-#Working on provider classes (dataCollector gets busData src and stopData needs busData to predict for adh)
-
-busData = pd.read_csv("data/busData.csv")
-#stopData = pd.read_json("data/stopData.json")
-with open("data/stopData.json") as f:
-      stopData = js.load(f)
-#print(stopData)
-#print(busData)
-
-
-
-
-
-
-#DATA FORMAT
-# Bus Data: lat lon, vehicle id, dir, route
-
-lister = busData[["longitude","latitude","vehicle","direction","route"]].values.tolist()
-stops=stopData
-
-for x in stops:
-      if(len(x)==5):
-            print(x)
-
-#for x in stops:
- #     if 6 == x[3]:
-  #          print(x)
-
-
-#for x in stops:
- #     print(x)
-
-
-'''
-lister=[[-84.362307,33.82584490,"1710","Northbound",4],[-84.5896475,33.5589891,"1841","Eastbound",6]
-        ,[-83.22,33.995,"1654","Southbound",4]];
-
-'''
-
-update_time="04/04/2021 7:56 P.m."
-
-'''
-#Stop Data : lat, long, stopID, routeID, dictionary of {'vehicleId':adherence}
-stops = [[-84.5896475,30.5589891,'155424','45',{'1710':-4,'1654':-7}],
-         [-84.5896475,32.5589891,'123432','4',{'1710':6,'1654':0.0}],[-84.5896475,34.5589891,12341,4,{'1710':10.11111,'1654':3}]]
-
-'''
-
-
-#data prepro here --------
-
-
-
-
-#unused labeling
-#----------------------------------------------------------------------------------- 
-#directionality encoder defined
-#dirList=["Southbound","Northbound","Eastbound","Westbound"]
-#encoder = prepro.LabelEncoder()
-#encoder.fit(dirList)
-
-#to ensure proper image displaying (encoder doesn't seem to have consistent starting position)
-#key = encoder.transform([x for x in dirList])
-
-
-#for i in range(0,len(lister)):
- #     lister[i][3]=encoder.transform([lister[i][3]])[0]
-#print(lister)
-#----------------------------------------------------------------------------------
-
-
-
-
-#sent data defined starting here-------
-# =============================================================================
- 
- 
- # number of bus, number of routes
-home_annoc = [str(len(lister)),str(2)]
  
 #home page --initial template adapted from w3schools css tutorial
 @app.route('/')
 @app.route('/Home')
 @app.route('/home')
 def home_builder():
+      
+      #---- reading in live Data
+      busData = pd.read_csv("data/busData.csv")
+    
+      with open("data/stopData.json") as f:
+            stopData = js.load(f) 
+      
+      
        
-       
-       
-       
-       
+      with open("data/time.txt","r") as f:
+            update_time=f.read()
+      
+      #--- finished reading in
+      
+      
+      lister = busData[["longitude","latitude","vehicle","direction","route"]].values.tolist()
+      stops=stopData
+      
+      
+      
+      home_annoc = [str(len(lister)),str(len(busData["route"].unique()))]
+            
        
       return render_template("home.html",value =lister,update_time=update_time,
                               home_annoc=home_annoc,stops=stops)

@@ -141,7 +141,7 @@ for x in x_live["vehicle"].unique():
       emptyDict, x_modi_lister = shapeCharge(x,emptyDict,x_modi_lister)
 
 x_modi = pd.DataFrame(x_modi_lister,columns=["timeStamp","vehicle","stop_id","route","direction","longitude","latitude"])
-print(len(x_modi))
+#print(len(x_modi))
 
 
 #print(emptyDict)
@@ -181,14 +181,14 @@ x_modi["vehicle"] = pd.Series(label_encoder[0].inverse_transform(x_modi["vehicle
 
 for stop_id, vehicle, adherence in x_modi[["stop_id","vehicle","adherence"]].itertuples(index=False):
  
-      emptyDict[stop_id][4][vehicle]= adherence 
+      emptyDict[stop_id][4][vehicle]= round(adherence,2) 
    
 
 
 
 emptyDict = [emptyDict[x] for x in emptyDict]
 
-print(emptyDict)
+#print(emptyDict)
 
 with open("data/stopData.json",'w+') as f:
       json.dump(emptyDict,f)
