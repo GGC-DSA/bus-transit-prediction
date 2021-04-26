@@ -25,14 +25,16 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from sklearn import preprocessing as prepro
 import os.path
 from datetime import date
-'''
+import json as js
+ #=============================================================================
+ 
 app = Flask(__name__, template_folder='templates')
-
-#Flask secret key TODO set as env
+ 
+ #Flask secret key TODO set as env
 app.secret_key = 'asdgagaweawsfasdfaqw'
-
-'''
-
+ 
+ 
+ #=============================================================================
 
 
 
@@ -43,27 +45,50 @@ app.secret_key = 'asdgagaweawsfasdfaqw'
 #Working on provider classes (dataCollector gets busData src and stopData needs busData to predict for adh)
 
 busData = pd.read_csv("data/busData.csv")
-stopData = pd.read_json("data/stopData.json")
+#stopData = pd.read_json("data/stopData.json")
+with open("data/stopData.json") as f:
+      stopData = js.load(f)
+#print(stopData)
+#print(busData)
 
-print(stopData)
-print(busData)
 
 
 
+
+
+#DATA FORMAT
+# Bus Data: lat lon, vehicle id, dir, route
+
+lister = busData[["longitude","latitude","vehicle","direction","route"]].values.tolist()
+stops=stopData
+
+for x in stops:
+      if(len(x)==5):
+            print(x)
+
+#for x in stops:
+ #     if 6 == x[3]:
+  #          print(x)
+
+
+#for x in stops:
+ #     print(x)
 
 
 '''
-#DATA FORMAT
-# Bus Data: lat lon, vehicle id, dir, route
 lister=[[-84.362307,33.82584490,"1710","Northbound",4],[-84.5896475,33.5589891,"1841","Eastbound",6]
         ,[-83.22,33.995,"1654","Southbound",4]];
+
+'''
+
 update_time="04/04/2021 7:56 P.m."
 
+'''
 #Stop Data : lat, long, stopID, routeID, dictionary of {'vehicleId':adherence}
-stops = [[-84.5896475,36.5589891,1456,5],[-84.5896475,30.5589891,155424,4,{'1710':-4,'1654':-7}],
-         [-84.5896475,32.5589891,123432,4,{'1710':6,'1654':0.0}],[-84.5896475,34.5589891,12341,4,{'1710':10,'1654':3}]]
+stops = [[-84.5896475,30.5589891,'155424','45',{'1710':-4,'1654':-7}],
+         [-84.5896475,32.5589891,'123432','4',{'1710':6,'1654':0.0}],[-84.5896475,34.5589891,12341,4,{'1710':10.11111,'1654':3}]]
 
-
+'''
 
 
 #data prepro here --------
@@ -91,57 +116,59 @@ stops = [[-84.5896475,36.5589891,1456,5],[-84.5896475,30.5589891,155424,4,{'1710
 
 
 #sent data defined starting here-------
-
-
-# number of bus, number of routes
+# =============================================================================
+ 
+ 
+ # number of bus, number of routes
 home_annoc = [str(len(lister)),str(2)]
-
+ 
 #home page --initial template adapted from w3schools css tutorial
 @app.route('/')
 @app.route('/Home')
 @app.route('/home')
 def home_builder():
-      
-      
-      
-      
-      
-      
+       
+       
+       
+       
+       
+       
       return render_template("home.html",value =lister,update_time=update_time,
-                             home_annoc=home_annoc,stops=stops)
-
-
+                              home_annoc=home_annoc,stops=stops)
+ 
+ 
 @app.route('/Data')
 def data_builder():
-      
-      #TODO Turner -------
-      #grab the arima model
-      
-      #calculate adherence for every hour for Today
-      
-      #model.predict(timeStamp....) 
-      
-      #return as variable
-      
-    
+       
+       #TODO Turner -------
+       #grab the arima model
+       
+       #calculate adherence for every hour for Today
+       
+       #model.predict(timeStamp....) 
+       
+       #return as variable
+       
+     
       values = [random.randint(-2,5) for x in range(0,24)]
       today = date.today()
-      
-      
+       
+       
       return render_template("data.html",values=values)
-
-
+ 
+ 
 @app.route('/AboutUs')
 def about_builder():
       return render_template("about.html")
-
-
+ 
+ 
 @app.route('/Code')
 def code_builder():
       return render_template("code.html")
-
-
-
+ 
+ 
+ 
 app.run(debug=False)
-
-'''
+ 
+ 
+ #=============================================================================

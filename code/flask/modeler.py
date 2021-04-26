@@ -125,7 +125,7 @@ def shapeCharge(id,dic,lister):
             if(str(stop) in dic):
                   dic[str(stop)][4][str(id)]=None
             else:
-                  dic[str(stop)]=[lat,lon,stop,route,{str(id):None}]
+                  dic[str(stop)]=[lon,lat,stop,route,{str(id):None}]
             lister.append({"timeStamp":shape["timeStamp"],"vehicle":str(id),"stop_id":stop,"route":route,"direction":shape["direction"],
                                                     "longitude":shape["longitude"],"latitude":shape["latitude"]})
                                                    
