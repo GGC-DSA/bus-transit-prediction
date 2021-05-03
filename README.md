@@ -1,6 +1,6 @@
 # Bus Transit Prediction
 Team: BusNet
-
+<br>Website: http://busnetcloud.com
 <h3>Team Structure</h3>
 
 Daniel Redder - Team Manager and Data Visualizer
@@ -465,15 +465,19 @@ trip_id,...,trip_headsign,direction_id
 <h2>Modeling</h2>
 
 <details><summary><strong>ARIMA</strong></summary>
+<br>
+ARIMA is a special statistical regression model we use to predict trending Adherence values during the day. It is more accurate at predicting values then our RNN model when predicting generally across a day (no specific vehicle or route). 
+
+
+<br>ARIMA Training Code: [Colab_Notebook](https://colab.research.google.com/drive/12OrOdpib8wiKRPiagumg_dmkC0eZ8S61?usp=sharing)
  
- test
  </details>
 
 
 <details><summary><strong>Long Short Term Memory RNN</strong></summary>**
  
+ The LSTM model is a keras package based neural network using the LSTM layer. This is what we use to predict specific adherence values live on our webpage. 
  
- test
  </details>
 
 
