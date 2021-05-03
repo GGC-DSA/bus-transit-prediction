@@ -321,8 +321,118 @@ Otherwise, it's optional.
  
 The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862) contains historical GTFS data for Gwinnett County Transit system. This data includes information containing stops, stop times, and timetables. This data is a branch of GTFS data, and similarly the information including field specifications can be found here [GTFS-Reference-Data](https://developers.google.com/transit/gtfs/reference#stop_timestxt).
 
+**agency**:
+
+| agency_id | agency_url | agency_lang | agency_name | agency_phone | agency_timezone | agency_fare_url | 
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------|
+| 669 |http://www.gctransit.com |	en |	Gwinnett County Transit |	770-822-5010 |	America/New_York |	https://www.gwinnettcounty.com/portal/gwinnett/Departments/Transportation/GwinnettCountyTransit/PassesandTickets  |	
+
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **agency_id** :  Identifies a transit brandwhich is often synonymous with a transit agency. Note that in some cases, such as when a single agency operates multiple separate services, agencies and brands are distinct. This document uses the term "agency" in place of "brand". A dataset may contain data from multiple agencies. This field is required when the dataset contains data for multiple transit agencies, otherwise it is optional.
+  **agency_name** : Full name of the transit agency.
+
+**agency_url** : URL of the transit agency.
+
+**agency_timezone** : Timezone where the transit agency is located. If multiple agencies are specified in the dataset, each must have the same agency_timezone.
+   
+**agency_lang** :Primary language used by this transit agency. This field helps GTFS consumers choose capitalization rules and other language-specific settings for the dataset.
+
+**agency_phone** : A voice telephone number for the specified agency. This field is a string value that presents the telephone number as typical for the agency's service area. It can and should contain punctuation marks to group the digits of the number. Dialable text (for example, TriMet's 503-238-RIDE) is permitted, but the field must not contain any other descriptive text.
+
+**agency_fare_url** : URL of a web page that allows a rider to purchase tickets or other fare instruments for that agency online.
+
+
 
 </details>
+
+**calendar**:
+
+  | service_id | service_name | monday | tuesday | wednesday | thursday | friday | saturday | sunday | start-date | end-date |
+| --- | ----- | ----------- | -------- | ------------ | -----------| -----------| -----------| -------| ---------| ---------|
+| c_20334_b_27144_d_32 |	Year Round (Reduced Service) NEW (Saturday only)  | 0 |	0 |	0 |	0 |	0 | 1 |	0 | 20200601 | 20210101 |
+
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **service_id** : Uniquely identifies a set of dates when service is available for one or more routes. Each service_id value can appear at most once in a calendar.txt file.
+
+ **service_name** : long form name of the service for a bus.
+ 
+  **monday** : Indicates whether the service operates on all Mondays in the date range specified by the start_date and end_date fields. Note that exceptions for particular dates    may be listed in calendar_dates.txt. Valid options are:
+
+   1 - Service is available for all Mondays in the date range.
+   0 - Service is not available for Mondays in the date range.
+  **tuesday** : Functions in the same way as monday except applies to Tuesdays
+
+  **wednesday** : Functions in the same way as monday except applies to Wednesdays
+
+  **thursday** : Functions in the same way as monday except applies to Thursdays
+
+  **friday** : Functions in the same way as monday except applies to Fridays
+
+  **saturday** : Functions in the same way as monday except applies to Saturdays.
+
+  **sunday** : Functions in the same way as monday except applies to Sundays.
+
+  **start-date** : Start service day for the service interval.
+
+  **end-date** : End service day for the service interval. This service day is included in the interval.
+
+   
+  
+  </details>
+  
+  **calendar_dates**:
+
+  | service_id | date | holiday_name |exception_type | 
+| --- | ----------- | --------- | -------- | 
+| c_4392_b_none_d_31 |	20201127 |	Day After Thanksgiving |	1 |
+
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **service_id** : Identifies a set of dates when a service exception occurs for one or more routes. Each (service_id, date) pair can only appear once in calendar_dates.txt if using calendar.txt and calendar_dates.txt in conjunction. If a service_id value appears in both calendar.txt and calendar_dates.txt, the information in calendar_dates.txt modifies the service information specified in calendar.txt.
+
+  **date** :Date when service exception occurs.
+  
+  **holiday_name** : name of the holiday.
+
+  **exception_type** : Indicates whether service is available on the date specified in the date field. Valid options are:
+
+1 - Service has been added for the specified date.
+2 - Service has been removed for the specified date.
+  
+  </details>
+  
+   **directions**:
+
+  | route_id | direction_id | direction | 
+| --- | ----------- | --------- |  
+| 15635 |	1 |	Outbound |
+
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **route_id** : Identifies a route associated with the fare class. If several routes with the same fare attributes exist, create a record in fare_rules.txt for each route.
+Example: If fare class "b" is valid on route "TSW" and "TSE", the fare_rules.txt file would contain these records for the fare class:
+fare_id,route_id
+b,TSW
+b,TSE
+  
+  **direction_id** : Indicates the direction of travel for a trip. This field is not used in routing; it provides a way to separate trips by direction when publishing time tables. Valid options are:
+
+0 - Travel in one direction (e.g. outbound travel).
+1 - Travel in the opposite direction (e.g. inbound travel).
+Example: The trip_headsign and direction_id fields could be used together to assign a name to travel in each direction for a set of trips. A trips.txt file could contain these records for use in time tables:
+trip_id,...,trip_headsign,direction_id
+1234,...,Airport,0
+1505,...,Downtown,1
+  
+  **direction** : Indicates Outbound or Inboud
+
+  </details>
 
 ----
 
