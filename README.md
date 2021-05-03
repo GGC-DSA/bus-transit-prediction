@@ -462,7 +462,19 @@ trip_id,...,trip_headsign,direction_id
 [Colab Notebook](https://colab.research.google.com/drive/1gzzbi2RumkQ-HN2GJkvz-k8B5H0zaiGB)
 
 
+<h2>Modeling</h2>
 
+<details><summary><strong>ARIMA</strong></summary>
+ 
+ test
+ </details>
+
+
+<details><summary><strong>Long Short Term Memory RNN</strong></summary>**
+ 
+ 
+ test
+ </details>
 
 
 
