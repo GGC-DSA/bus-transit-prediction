@@ -478,6 +478,8 @@ ARIMA is a special statistical regression model we use to predict trending Adher
  
  The LSTM model is a keras package based neural network using the LSTM layer. This is what we use to predict specific adherence values live on our webpage. 
  
+ <br>LSTM Training Code: [Colab_Notebook](https://colab.research.google.com/drive/1So4MRw1zTesMEswODRvcPVnY70oJdJpO?usp=sharing)
+ 
  </details>
 
 
