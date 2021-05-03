@@ -329,17 +329,17 @@ The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862) co
 
 <details><summary><strong>Initial Visualizations</strong></summary>
  
- <strong>Gwinnett County:</strong> (link here)
+ <strong>Gwinnett County:</strong> [Gwinnett County](https://rpubs.com/blgiordano/744665)
  
  <strong>GTFS:</strong>  [GTFS](https://colab.research.google.com/drive/1Ii7fnipjdU13v7k4cybNDOAv-2EHDBET?usp=sharing)
  
- <strong>Live Data:</strong> (link here)
+ <strong>Live Data:</strong> [Live Data](https://colab.research.google.com/drive/1U6bQ-Ys3x8siNMl-zr0SpZKuEu_uifQ9?usp=sharing)
  
  </details>
 
 <h2>Statistical Analysis and In Depth Visualizations</h2>
 
-(notebook link here)
+[Colab Notebook](https://colab.research.google.com/drive/1gzzbi2RumkQ-HN2GJkvz-k8B5H0zaiGB)
 
 
 
