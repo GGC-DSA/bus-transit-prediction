@@ -20,16 +20,16 @@ Python, R, ~~Raspberry Pi~~, Git, AWS, Flask, Colab, Jupyter Notebooks, Tableau
 
 
 
-<h2>Data Collection & Exploration</h2>
-
-
-
-<details>
- <summary><strong>Data Sets</strong></summary>
+<h2>Data Sets</h2>
   
-  
+ <details><summary>Expand</summary>
+ 
+ 
   <h2>Live Marta Bus Data</h2>
  
+ Description and things
+ 
+<details><summary><strong>Input Data Structure</strong></summary>
   
   | Adherence | block_abbr | block_id | direction | last_updated | latitude | longitude | route | stop_id | timepoint | trip_id | vehicle |
 | --- | ----------- | -------- | ------------ | -----------| -----------| -----------| -----------| -----------| -----------| -----------| -----------| 
@@ -76,13 +76,14 @@ Python, R, ~~Raspberry Pi~~, Git, AWS, Flask, Colab, Jupyter Notebooks, Tableau
   
   **vehicle** : The unique ID identifying a specific bus
   
-  </details>
+  </details></details>
 
   
   <h2>GTFS Data</h2>
   
   GTFS or General Transit Feed Specification is a standard data format used for transportation data. This data provides all the organizational information that links feed data to specific buses, routes, and stops. The documentation for this data including field specifications can be found here "[GTFS-Reference-Data](https://developers.google.com/transit/gtfs/reference#stop_timestxt)". MARTA's 2020 implementation of GTFS can be found [here](https://www.itsmarta.com/app-developer-resources.aspx) in the form of a zip folder with the following files inside. 
 
+<details><summary><strong>Input Data Structure</strong></summary>
 
 **agency**:
 
@@ -315,11 +316,13 @@ Conditionally required:
 This field is required if the trip has continuous behavior defined, either at the route level or at the stop time level.
 Otherwise, it's optional.
   
-  </details>
+  </details></details>
   
  <h2>Gwinnett County Transit Feeds</h2>
  
 The data found [here](https://transitfeeds.com/p/gwinnett-county-transit/862) contains historical GTFS data for Gwinnett County Transit system. This data includes information containing stops, stop times, and timetables. This data is a branch of GTFS data, and similarly the information including field specifications can be found here [GTFS-Reference-Data](https://developers.google.com/transit/gtfs/reference#stop_timestxt).
+
+<details><summary><strong>Input Data Structure</strong></summary>
 
 **agency**:
 
@@ -434,7 +437,13 @@ trip_id,...,trip_headsign,direction_id
 
   </details>
 
-----
+</details></details>
+
+
+
+
+<h2>Statistical Analysis and In Depth Visualizations</h2>
+
 
 
 <details><summary><strong>Initial Visualizations</strong></summary>
@@ -447,7 +456,10 @@ trip_id,...,trip_headsign,direction_id
  
  </details>
 
-<h2>Statistical Analysis and In Depth Visualizations</h2>
+
+
+
+
 
 [Colab Notebook](https://colab.research.google.com/drive/1gzzbi2RumkQ-HN2GJkvz-k8B5H0zaiGB)
 
