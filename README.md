@@ -15,9 +15,11 @@ Busnet is a dynamic map that shows the route and predicted bus station arrival t
  
 <h3>Technologies</h3> 
 
-Python, R, ~~Raspberry Pi~~, Git, AWS, Flask, Colab, Jupyter Notebooks, Tableau
+Python, R, ~~Raspberry Pi~~, Git, AWS, Colab, Jupyter Notebooks, Tableau
 
+Python Packages : numpy, statsmodels, pandas, matplotlib, seaborn, keras, tensorflow, marta-python, flask, boto3, pickle, tensorboard
 
+Other tools : uwsgi, nginx, tmux, cron, notepad++, AWS CLI
 
 
 <h2>Data Sets</h2>
@@ -442,24 +444,20 @@ trip_id,...,trip_headsign,direction_id
 
 
 
-<h2>Statistical Analysis and In Depth Visualizations</h2>
+<h2>Data Exploration & Analysis</h2>
 
 
 
-<details><summary><strong>Initial Visualizations</strong></summary>
+<strong>Initial Visualizations</strong>
  
- <strong>Gwinnett County:</strong> [Gwinnett County](https://rpubs.com/blgiordano/744665)
+ - <strong>Gwinnett County:</strong> [Colab_Notebook](https://rpubs.com/blgiordano/744665)
  
- <strong>GTFS:</strong>  [GTFS](https://colab.research.google.com/drive/1Ii7fnipjdU13v7k4cybNDOAv-2EHDBET?usp=sharing)
+ - <strong>GTFS:</strong>  [Colab_Notebook](https://colab.research.google.com/drive/1Ii7fnipjdU13v7k4cybNDOAv-2EHDBET?usp=sharing)
  
- <strong>Live Data:</strong> [Live Data](https://colab.research.google.com/drive/1U6bQ-Ys3x8siNMl-zr0SpZKuEu_uifQ9?usp=sharing)
+- <strong>Live Data:</strong> [Colab_Notebook](https://colab.research.google.com/drive/1U6bQ-Ys3x8siNMl-zr0SpZKuEu_uifQ9?usp=sharing)
  
- </details>
 
-
-
-
-
+**Analysis**
 
 [Colab Notebook](https://colab.research.google.com/drive/1gzzbi2RumkQ-HN2GJkvz-k8B5H0zaiGB)
 
