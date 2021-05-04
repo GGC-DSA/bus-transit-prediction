@@ -602,7 +602,7 @@ Conditionally required:
 This field is required if the trip has continuous behavior defined, either at the route level or at the stop time level.
 Otherwise, it's optional.
   
-  </details>
+  </details></details>
 
 
 <h2>Data Exploration & Analysis</h2>
