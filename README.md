@@ -438,10 +438,171 @@ trip_id,...,trip_headsign,direction_id
   **direction** : Indicates Outbound or Inboud
 
   </details>
+  
+   **fare_attributes** :
 
-</details></details>
+  | agency_id | fare_id | price | currency_type | payment_method | transfers | transfer_duration |
+| --- | ----------- | --------- |  ------------ | -------------- | --------- | ----------------- |
+| 669 |	1951 |	2.50 | USD | 0 | 0 | 0 |
+
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **agency_id** :Identifies the relevant agency for a fare. This field is required for datasets with multiple agencies defined in agency.txt, otherwise it is optional.
+
+  **fare_id** : Identifies a fare class.
+  **price** : Fare price, in the unit specified by currency_type.
+  **currency_type** : Currency used to pay the fare.
+
+  **payment_method** : Indicates when the fare must be paid. Valid options are:
+
+0 - Fare is paid on board.
+1 - Fare must be paid before boarding.
+  
+  **transfers** : Indicates the number of transfers permitted on this fare. The fact that this field can be left empty is an exception to the requirement that a Required field must not be empty. Valid options are:
+
+0 - No transfers permitted on this fare.
+1 - Riders may transfer once.
+2 - Riders may transfer twice.
+empty - Unlimited transfers are permitted.
+  **transfer_duration** :Length of time in seconds before a transfer expires. When transfers=0 this field can be used to indicate how long a ticket is valid for or it can can be left empty.
 
 
+</details>
+
+**routes**:
+
+ | route_id | route_short_name | route_long_name | route_desc | route_type | route_url | route_text_color | 
+| --- | ----------- | -------- | ------------ | -----------| -----------| -----------| 
+| 669 |	6292 |	Doraville via Satellite |	 |	3 |	 | FFFFFF |	
+
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **route_id** :  Identifies a route.
+
+  **route_short_name** :  Short name of a route. This will often be a short, abstract identifier like "32", "100X", or "Green" that riders use to identify a route, but which doesn't give any indication of what places the route serves. Either route_short_name or route_long_name must be specified, or potentially both if appropriate.
+
+  **route_long_name** :  Full name of a route. This name is generally more descriptive than the route_short_name and often includes the route's destination or stop. Either route_short_name or route_long_name must be specified, or potentially both if appropriate.
+
+  **route_desc** :  Description of a route that provides useful, quality information. Do not simply duplicate the name of the route.
+  **route_type** :  Indicates the type of transportation used on a route. Valid options are:
+
+0 - Tram, Streetcar, Light rail. Any light rail or street level system within a metropolitan area.
+1 - Subway, Metro. Any underground rail system within a metropolitan area.
+2 - Rail. Used for intercity or long-distance travel.
+3 - Bus. Used for short- and long-distance bus routes.
+4 - Ferry. Used for short- and long-distance boat service.
+5 - Cable tram. Used for street-level rail cars where the cable runs beneath the vehicle, e.g., cable car in San Francisco.
+6 - Aerial lift, suspended cable car (e.g., gondola lift, aerial tramway). Cable transport where cabins, cars, gondolas or open chairs are suspended by means of one or more cables.
+7 - Funicular. Any rail system designed for steep inclines.
+11 - Trolleybus. Electric buses that draw power from overhead wires using poles.
+12 - Monorail. Railway in which the track consists of a single rail or a beam.
+
+  **route_url** :  URL of a web page about the particular route. Should be different from the agency.agency_url value.
+
+  **route_text_color** :  Legible color to use for text drawn against a background of route_color. Defaults to black (000000) when omitted or left empty. The color difference between route_color and route_text_color should provide sufficient contrast when viewed on a black and white screen.
+
+
+</details>
+
+**stops**:
+
+ | stop_id | stop_code | stop_name | stop_lat | stop_lon |
+ | --------- | -------- | ------------- | ----- | ------ |
+ | 2334737 | 32 | Arts Center Marta Station | 33.727827 | -84.443085 |
+
+<details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **stop_id** :  Identifies a stop, station, or station entrance.
+
+The term "station entrance" refers to both station entrances and station exits. Stops, stations or station entrances are collectively referred to as locations. Multiple routes may use the same stop.
+
+  **stop_code** : Short text or a number that identifies the location for riders. These codes are often used in phone-based transit information systems or printed on signage to make it easier for riders to get information for a particular location. The stop_code can be the same as stop_id if it is public facing. This field should be left empty for locations without a code presented to riders.
+
+  **stop_name** : Name of the location. Use a name that people will understand in the local and tourist vernacular.
+
+When the location is a boarding area (location_type=4), the stop_name should contains the name of the boarding area as displayed by the agency. It could be just one letter (like on some European intercity railway stations), or text like “Wheelchair boarding area” (NYC’s Subway) or “Head of short trains” (Paris’ RER).
+
+Conditionally Required:
+• Required for locations which are stops (location_type=0), stations (location_type=1) or entrances/exits (location_type=2).
+• Optional for locations which are generic nodes (location_type=3) or boarding areas (location_type=4).
+
+  **stop_lat** : Latitude of the location.
+
+Conditionally Required:
+• Required for locations which are stops (location_type=0), stations (location_type=1) or entrances/exits (location_type=2).
+• Optional for locations which are generic nodes (location_type=3) or boarding areas (location_type=4).
+
+  **stop_lon** : Longitude of the location.
+
+Conditionally Required:
+• Required for locations which are stops (location_type=0), stations (location_type=1) or entrances/exits (location_type=2).
+• Optional for locations which are generic nodes (location_type=3) or boarding areas (location_type=4).
+  
+  </details>
+  
+  **trips**:
+
+| from_stop_id | to_stop_id | transfer_type | min_transfer_time |
+| --------- | -------- | ------- | -------------- | 
+| 2334746 | 2334746 | 1 | 0 |
+ 
+ <details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **from_stop_id** : Identifies a stop or station where a connection between routes begins. If this field refers to a station, the transfer rule applies to all its child stops.
+
+  
+  **to_stop_id** : Identifies a stop or station where a connection between routes ends. If this field refers to a station, the transfer rule applies to all child stops.
+
+  
+  **transfer_type** : Indicates the type of connection for the specified (from_stop_id, to_stop_id) pair. Valid options are:
+
+0 or empty - Recommended transfer point between routes.
+1 - Timed transfer point between two routes. The departing vehicle is expected to wait for the arriving one and leave sufficient time for a rider to transfer between routes.
+2 - Transfer requires a minimum amount of time between arrival and departure to ensure a connection. The time required to transfer is specified by min_transfer_time.
+3 - Transfers are not possible between routes at the location.
+  
+  **min_transfer_time** : Amount of time, in seconds, that must be available to permit a transfer between routes at the specified stops. The min_transfer_time should be sufficient to permit a typical rider to move between the two stops, including buffer time to allow for schedule variance on each route.
+
+  
+  
+  
+</details>
+  
+  **trips**:
+
+| route_id | service_id | trip_id | trip_headsign | direction_id | block_id | shape_id |
+| --------- | -------- | ------- | -------------- | --------- | ------- | ------ |
+| 11089 | c_16096_b | t_518615 | Georgia Gwinnett Collede | 0 | p_178664 | 87791 |
+ 
+ <details><summary><strong>Field Definitions</strong></summary>
+  
+  \
+  **route_id** :  Identifies a route.
+
+  **service_id** :  Identifies a set of dates when service is available for one or more routes.
+
+  **trip_id** :  Identifies a trip.
+
+  **trip_headsign** :  Text that appears on signage identifying the trip's destination to riders. Use this field to distinguish between different patterns of service on the same route. If the headsign changes during a trip, trip_headsign can be overridden by specifying values for the stop_times.stop_headsign.
+
+  **direction_id** :  Indicates the direction of travel for a trip. This field is not used in routing; it provides a way to separate trips by direction when publishing time tables. Valid options are:
+
+0 - Travel in one direction (e.g. outbound travel).
+1 - Travel in the opposite direction (e.g. inbound travel).
+
+  **block_id** :  Identifies the block to which the trip belongs. A block consists of a single trip or many sequential trips made using the same vehicle, defined by shared service days and block_id. A block_id can have trips with different service days, making distinct blocks. See the example below
+  
+  **shape_id** :  Identifies a geospatial shape that describes the vehicle travel path for a trip.
+
+Conditionally required:
+This field is required if the trip has continuous behavior defined, either at the route level or at the stop time level.
+Otherwise, it's optional.
+  
+  </details>
 
 
 <h2>Data Exploration & Analysis</h2>
