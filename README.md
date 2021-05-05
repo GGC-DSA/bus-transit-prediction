@@ -5,6 +5,7 @@ Team: BusNet
 
 Daniel Redder - Team Manager and Data Visualizer
 
+![brittany_picture](https://imgur.com/a/Q2K3vRU)
 Brittany Giordano - Data Modeler and Client Liaison
 
 Turner Nalley - Data Analyzer and Project Scribe
