@@ -15,10 +15,22 @@ import numpy as np
 from flask import Flask, render_template, request, redirect, url_for, flash, json
 from sklearn import preprocessing as prepro
 import os.path
-from datetime import date
+import datetime
 import json as js
 from dotenv import load_dotenv
 import os
+import matplotlib.dates as md
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+from sklearn.linear_model import LinearRegression
+import scipy.stats as stats
+import plotly.graph_objects as go
+import random
+import matplotlib.cm as cm
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+from sklearn.cluster import KMeans
 
 # =============================================================================
 
@@ -77,7 +89,11 @@ def about_builder():
 
 @app.route('/Code')
 def code_builder():
-    # load in CSV
+    # ---- NOTEBOOK VISUALIZATIONS ---- #
+
+    # ---- D3.JS BACKEND CODE ----
+
+    # load in CSVs
     df = pd.read_csv('ArimaDataSetFinal.csv')
 
     # convert series to timedate and parse/change timeStamp to hour and minutes only
