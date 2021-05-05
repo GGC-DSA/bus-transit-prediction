@@ -67,7 +67,16 @@ def data_builder():
     # model.predict(timeStamp....)
 
     # return as variable
-    
+    return render_template("data.html")
+
+
+@app.route('/AboutUs')
+def about_builder():
+    return render_template("about.html")
+
+
+@app.route('/Code')
+def code_builder():
     # load in CSV
     df = pd.read_csv('ArimaDataSetFinal.csv')
 
@@ -79,17 +88,7 @@ def data_builder():
     chart_data = df.to_dict(orient='records')
     chart_data = json.dumps(chart_data)
     data = {'chart_data': chart_data}
-    return render_template("data.html", data=data)
-
-
-@app.route('/AboutUs')
-def about_builder():
-    return render_template("about.html")
-
-
-@app.route('/Code')
-def code_builder():
-    return render_template("code.html")
+    return render_template("code.html", data=data)
 
 
 app.run(debug=False)
