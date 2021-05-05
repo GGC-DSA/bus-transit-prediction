@@ -3,10 +3,15 @@ Team: BusNet
 <br>Website: http://busnetcloud.com
 <h3>Team Structure</h3>
 
+<img src="https://i.imgur.com/ALwnkgL.png" alt="drawing" width="200"/>
+
 Daniel Redder - Team Manager and Data Visualizer
 
-![brittany_picture](https://imgur.com/a/Q2K3vRU)
+<img src="https://i.imgur.com/3aOBH7K.png" alt="drawing" width="200"/>
+
 Brittany Giordano - Data Modeler and Client Liaison
+
+<img src="https://i.imgur.com/vJf4a7G.png" alt="drawing" width="200"/>
 
 Turner Nalley - Data Analyzer and Project Scribe
  
