@@ -13,25 +13,11 @@ secret key read in file .env
 import pandas as pd
 import numpy as np
 from flask import Flask, render_template, request, redirect, url_for, flash, json
-from sklearn import preprocessing as prepro
 import os.path
 import datetime
 import json as js
 from dotenv import load_dotenv
 import os
-import matplotlib.dates as md
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn import linear_model
-from sklearn.linear_model import LinearRegression
-import scipy.stats as stats
-import plotly.graph_objects as go
-import random
-import matplotlib.cm as cm
-from sklearn.linear_model import LinearRegression
-from sklearn import metrics
-from sklearn.cluster import KMeans
-
 # =============================================================================
 
 app = Flask(__name__, template_folder='templates')
