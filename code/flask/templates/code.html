@@ -130,6 +130,12 @@ body {
     width: 100%;
   }
 }
+
+
+      .img-container {
+        text-align: center;
+        display: block;
+      }
 </style>
 </head>
 
@@ -162,7 +168,8 @@ body {
 
 
     <div class = "card">
-      <h2>D3.js Visualization</h2> <br>
+        <span class="img-container">
+      <h2 style="text-align:center">D3.js Visualization</h2> <br>
    <!-- d3.js pack -->
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="https://d3js.org/d3-time.v2.min.js" ></script>
@@ -175,7 +182,6 @@ var format = d3.timeFormat("%X");
 
 <!-- create div -->
 <div id="my_dataviz"></div>
-
 <script>
     var graphData = {{data.chart_data | safe}}
     // set the dimensions and margins of the graph
@@ -261,7 +267,7 @@ var format = d3.timeFormat("%X");
             .datum(data)
             .attr("class", "line")
             .attr("fill", "none")
-            .attr("stroke", "steelblue")
+            .attr("stroke", "orange")
             .attr("stroke-width", 1.5)
             .attr("d", d3.line()
                 .x(function (d) {
@@ -335,20 +341,31 @@ var format = d3.timeFormat("%X");
     };
 drawGraph(graphData);
 </script>
+        <br>
+    This D3.js visualization takes input from our ARIMA model and displays the adherence on the interactive graph by it's timestamp. <br>
+        </span>
     </div>
 
    <div class = "card">
-
- <!--Example hyperlink <a href="url">link text</a> -->
-     <h2>Route 78 & 82 Notebook Visulization</h2> <br>
-<image src="{{url_for('static',filename='images/route78-82.png')}}"> <br>
+    <span class="img-container">
+     <h2 style="text-align:center">Route 78 & 82 Notebook Visualization</h2> <br>
+       <span class="img-container">
+           <image src="{{url_for('static',filename='images/route78-82.png')}}" width="600" height="500"></image> <br>
+    <br>
+    This visualization shows the adherence and indexes for route 78 & 62. This plot shows that adherence and index for these two routes is concentrated in
+    one area with a few outliers. Around index 175 the adherence for the reamaining indexes drastically increases.
+    </span>
     </div>
 
 
     <div class = "card">
-     <h2>Average Adherence Notebook Visulization</h2>
-      <image src="{{url_for('static',filename='average-adherence.png')}}">
-
+        <span class="img-container">
+     <h2 style="text-align:center">Average Adherence Notebook Visualization</h2>
+        <image src="{{url_for('static',filename='images/average-adherence.png')}}" width="600" height="500"></image> <br>
+          <br>
+    This visualization shows the average adherence vs the hour of the day. Here you can see the average of all routes combined and one of out major findings that
+          route 60 typically runs very late in comparison.
+        </span>
     </div>
      </div>
 
