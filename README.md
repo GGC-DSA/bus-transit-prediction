@@ -1,6 +1,7 @@
 # Bus Transit Prediction
 Team: BusNet
 <br>Website: http://busnetcloud.com
+<br>TODO Page: https://trello.com/b/F0TiNW9F/todos
 <h3>Team Structure</h3>
 
 <img src="https://i.imgur.com/ALwnkgL.png" alt="drawing" width="200"/>
