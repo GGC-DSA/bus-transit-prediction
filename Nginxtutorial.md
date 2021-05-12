@@ -34,7 +34,7 @@ OpenSSH
 ```
 
 
-    Enter the following `sudo ufw allow 'Nginx HTTP'`
+    Enter the following `sudo ufw allow 'Nginx HTTP'` and `sudo ufw allow 'OpenSSH'`
     To ensure the port was properly opened use `sudo ufw status`
     And you should see something like this
 ```sh
@@ -49,6 +49,8 @@ OpenSSH (v6)               ALLOW       Anywhere (v6)
 Nginx HTTP (v6)            ALLOW       Anywhere (v6)
 ```
      If you do not see the above you need to run `sudo ufw enable` then check again to see if the ufw firewall is active. 
+     IMPORTANT (Make sure you limit ssh to only specifically your IP address as this is a vulnerability) 
+       This can be done through the AWS console with the "myIP" option, or locally through your network and or ufw firewall settings. 
 
 4. Run `systemctl status nginx` (you may need to install the systemctl utility `  
 sudo apt-get install -y systemd` with that)
