@@ -1,3 +1,4 @@
+
 # This is the tutorial document this shows how we developed our webserver with Nginx, Flask, and uWSGI.
 
 **References**
@@ -84,3 +85,58 @@ Afterwards you should see something that looks like this
 ![blah](https://i.imgur.com/l5Q6OWe.png)
 
 **Part 2 (Configuring Nginx and Flask)**
+
+
+6. Now we need to install python specifically `(3.7.6)` we are going to do this the easy way with the deadsnakes repository 
+```sh
+sudo add-apt-repository ppa:deadsnakes/ppa
+```
+Press Enter when prompted. 
+
+---
+7. Next we install the specific version of python we are using
+```sh
+sudo apt install python3.7
+```
+This should install python `3.7.6 or 3.7.10` if it does not it is likely the deadsnakes repo has been updated look there and you should be able to find the proper command to install this version. 
+
+----
+8. Create the Python Virtual Env  (using venv)
+
+ First install venv for 3.7  `sudo apt install python3.7-venv`
+ 
+ Create the Environment `python3.7 -m venv projenv`
+ 
+ Activate the Environment `source projenv/bin/activate`
+ 
+ Then you should see  `(projenv)` in front of your path on terminal, this means your env is active
+ 
+ ---
+ 9. Install packages
+ 
+ First install some base utilities
+ ```sh
+ sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
+ ```
+ Next we upgrade pip `pip install --upgrade pip`
+ Now we install wheel `pip install wheel`
+
+---
+**(make sure to do these steps  before installing uwsgi and flask)**
+Install python 3.5 dev tools to build uwsgi `sudo apt-get install python3.5-dev`
+
+Now We need to change the version of `gcc` we are using to 4.8 because there is a bug with venv, gcc5, and uwsgi. To do this we do the following steps 
+
+```sh
+ls /usr/bin/gcc* -l 
+
+sudo apt-get  install gcc-4.8
+
+sudo rm /usr/bin/gcc
+
+sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
+```
+
+---
+
+uwsgi and flask `pip install uwsgi flask`
