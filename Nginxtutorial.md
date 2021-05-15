@@ -140,3 +140,28 @@ sudo ln -s /usr/bin/gcc-4.8 /usr/bin/gcc
 ---
 
 uwsgi and flask `pip install uwsgi flask`
+
+---
+9. Create Test App for Flask (This step ensures ports are good)
+
+Create a file with the name `app.py` using `nano app.py` while in your project directory
+The code in this file should be 
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "<h1 style='color:blue'>Hello There!</h1>"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
+``` 
+Next type `sudo ufw allow 5000` (as with all firewall editing be careful with this)
+this opens port 5000 which is the default port for flask.
+
+Now we run the flask dev server by running our python script 
+`python app.py`
+
+Next go to either `localhost:5000` or `aws_external_ip:5000` on a web browser and you should see something like this 
+![blah](https://i.imgur.com/CabRUAp.png)
